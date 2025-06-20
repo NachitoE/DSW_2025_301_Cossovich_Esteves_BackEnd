@@ -2,6 +2,7 @@ import express from 'express'
 import {Bird} from './bird.js'
 
 const APP_PATH: string = "/"
+const BIRDS_PATH: string = "/api/birds/"
 
 const app = express()
 
@@ -18,10 +19,30 @@ const birds = [
     ),
 ]
 
+/*
 app.use(APP_PATH, (req, res) => 
 {
     res.send(birds)
-})
+}
+)
+*/
+app.get(BIRDS_PATH, (req, res) => 
+    {
+        res.json(birds)
+    }
+)
+
+app.get(`${BIRDS_PATH}:id`, (req, res) => 
+    {
+        const bird = birds.find((x) => x.id === req.params.id)
+        if(!bird){
+            res.status(404).send({message: 'bird not found'})
+            return;
+        }
+        res.json(bird)
+    }
+)
+    
 
 app.listen(3000, () =>{
     console.log("Listening at http://localhost:3000/")

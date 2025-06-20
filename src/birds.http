@@ -1,0 +1,4 @@
+###GET ALL BIRDS
+GET http://localhost:3000/api/birds
+### GET A SPECIFIC BIRD
+GET http://localhost:3000/api/birds/112184db-79ef-4848-8d15-0a7924cda3ae
