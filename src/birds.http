@@ -1,4 +1,13 @@
 ###GET ALL BIRDS
 GET http://localhost:3000/api/birds
 ### GET A SPECIFIC BIRD
-GET http://localhost:3000/api/birds/112184db-79ef-4848-8d15-0a7924cda3ae
+GET http://localhost:3000/api/birds/a776deb3-81c2-4de9-bf43-9579cec95c8c
+### CREATE A NEW BIRD
+POST http://localhost:3000/api/birds
+Content-Type: application/json
+
+{
+    "name": "Calandria",
+    "scientificName": "Mimus saturninus",
+    "description": "Es famosa por su canto melodioso y su habilidad para imitar los sonidos de otras aves y hasta de animales e instrumentos."
+}

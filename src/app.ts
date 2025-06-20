@@ -5,8 +5,9 @@ const APP_PATH: string = "/"
 const BIRDS_PATH: string = "/api/birds/"
 
 const app = express()
+app.use(express.json())
 
-const birds = [
+let birds = [
     new Bird(
         'Cotorra Argentina',
         'Myiopsitta monachus',
@@ -42,7 +43,18 @@ app.get(`${BIRDS_PATH}:id`, (req, res) =>
         res.json(bird)
     }
 )
-    
+
+app.post(BIRDS_PATH,(req, res) => {
+    const {name, scientificName, description} = req.body
+    const newBird = new Bird(name, scientificName, description)
+    birds.push(newBird)
+    res.status(201)
+    .send({
+        message: 'Bird succesfully created.',
+        data: newBird
+    })
+}
+)
 
 app.listen(3000, () =>{
     console.log("Listening at http://localhost:3000/")
