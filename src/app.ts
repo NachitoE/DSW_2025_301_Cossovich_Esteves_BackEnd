@@ -29,7 +29,7 @@ app.use(APP_PATH, (req, res) =>
 */
 app.get(BIRDS_PATH, (req, res) => 
     {
-        res.json(birds)
+        res.json({data: birds})
     }
 )
 
@@ -40,7 +40,7 @@ app.get(`${BIRDS_PATH}:id`, (req, res) =>
             res.status(404).send({message: 'bird not found'})
             return;
         }
-        res.json(bird)
+        res.json({data: bird})
     }
 )
 
