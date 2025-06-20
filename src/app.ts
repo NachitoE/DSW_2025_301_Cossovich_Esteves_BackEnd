@@ -44,7 +44,8 @@ app.get(`${BIRDS_PATH}:id`, (req, res) =>
     }
 )
 
-app.post(BIRDS_PATH,(req, res) => {
+app.post(BIRDS_PATH, (req, res) => 
+    {
     const {name, scientificName, description} = req.body
     const newBird = new Bird(name, scientificName, description)
     birds.push(newBird)
@@ -53,7 +54,29 @@ app.post(BIRDS_PATH,(req, res) => {
         message: 'Bird succesfully created.',
         data: newBird
     })
-}
+    }
+)
+
+app.put(`${BIRDS_PATH}:id`, (req, res) => 
+    {
+        const birdIndex = birds.findIndex((x) => x.id === req.params.id)
+        if(birdIndex == -1){
+            res.status(404).send({message: 'bird not found'})
+            return;
+        }
+        const oldData = { ...birds[birdIndex] }
+        const inputData = {
+            name: req.body.name,
+            scientificName: req.body.scientificName,
+            description: req.body.description
+        }
+        birds[birdIndex] = {...birds[birdIndex], ...inputData}
+        res.status(200).send({
+            message: 'Replaced bird data.',
+            data: birds[birdIndex],
+            old_data: oldData
+        })
+    }
 )
 
 app.listen(3000, () =>{

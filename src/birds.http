@@ -1,13 +1,22 @@
 ###GET ALL BIRDS
 GET http://localhost:3000/api/birds
 ### GET A SPECIFIC BIRD
-GET http://localhost:3000/api/birds/a776deb3-81c2-4de9-bf43-9579cec95c8c
+GET http://localhost:3000/api/birds/fe802436-aad6-45ec-871c-a41f46757d46
 ### CREATE A NEW BIRD
-POST http://localhost:3000/api/birds
+POST http://localhost:3000/api/birds/
 Content-Type: application/json
 
 {
     "name": "Calandria",
     "scientificName": "Mimus saturninus",
     "description": "Es famosa por su canto melodioso y su habilidad para imitar los sonidos de otras aves y hasta de animales e instrumentos."
+}
+### REPLACE A SPECIFIC BIRD DATA
+PUT http://localhost:3000/api/birds/5a0ca8cc-580b-4d97-88ee-ba3961fd7042
+Content-Type: application/json
+
+{
+    "name": "Arrendajo Azul",
+    "scientificName": "Cyanocitta cristata",
+    "description": "Su coloración es predominantemente azul, con pecho y partes inferiores blancas y cresta azul."
 }
