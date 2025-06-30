@@ -1,22 +1,26 @@
 import express from 'express'
 import {Bird} from './bird.js'
+import cors from 'cors';
 
 const APP_PATH: string = "/"
 const BIRDS_PATH: string = "/api/birds/"
 
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 let birds = [
     new Bird(
         'Cotorra Argentina',
         'Myiopsitta monachus',
-        'Es la especie del cotorro Tony, la mascota de Noah.'
+        'Es la especie del cotorro Tony, la mascota de Noah.',
+        'cotorra_argentina.jpg'
     ),
     new Bird(
         'Cotorra Australiana',
         'Melopsittacus undulatus',
-        'Es un ave de jaula muy popular, no solo por sus vivos colores sino también por su fácil adaptación.'
+        'Es un ave de jaula muy popular, no solo por sus vivos colores sino también por su fácil adaptación.',
+        'cotorra_australiana.jpg'
     ),
 ]
 
@@ -29,6 +33,7 @@ app.use(APP_PATH, (req, res) =>
 */
 app.get(BIRDS_PATH, (req, res) => 
     {
+        console.log("🐦 Petición recibida en /api/birds");
         res.json({data: birds})
     }
 )
@@ -46,8 +51,8 @@ app.get(`${BIRDS_PATH}:id`, (req, res) =>
 
 app.post(BIRDS_PATH, (req, res) => 
     {
-    const {name, scientificName, description} = req.body
-    const newBird = new Bird(name, scientificName, description)
+    const {name, scientificName, description, image} = req.body
+    const newBird = new Bird(name, scientificName, description, image)
     birds.push(newBird)
     res.status(201)
     .send({

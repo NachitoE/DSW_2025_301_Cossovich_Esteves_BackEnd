@@ -5,6 +5,7 @@ export class Bird{
         public name: string,
         public scientificName: string,
         public description: string,
+        public image: string,
         public id: string = crypto.randomUUID()
         //public image: image
     ){}
