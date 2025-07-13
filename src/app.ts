@@ -49,12 +49,12 @@ app.get(`${BIRDS_PATH}:id`, (req, res) => {
 });
 
 app.post(BIRDS_PATH, (req, res) => {
-  const { name, scientificName, description, image } = req.body;
+  const { name, scientificName, description, imageURL } = req.body;
   const newBird: Bird = {
     name,
     scientificName,
     description,
-    imageURL: image,
+    imageURL,
     id: crypto.randomUUID(),
   };
   birds.push(newBird);
