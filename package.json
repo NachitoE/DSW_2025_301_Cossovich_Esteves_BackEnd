@@ -19,6 +19,7 @@
   "dependencies": {
     "@types/cors": "^2.8.19",
     "cors": "^2.8.5",
-    "express": "5.1.0"
+    "express": "5.1.0",
+    "shared-types": "github:NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes"
   }
 }

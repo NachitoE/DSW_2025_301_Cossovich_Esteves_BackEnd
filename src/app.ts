@@ -1,6 +1,7 @@
 import express from "express";
-import { Bird } from "./bird.js";
+import type { Bird } from "shared-types";
 import cors from "cors";
+import crypto from "node:crypto";
 
 const APP_PATH: string = "/";
 const BIRDS_PATH: string = "/api/birds/";
@@ -9,67 +10,21 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-let birds = [
-  new Bird(
-    "Cotorra Argentina",
-    "Myiopsitta monachus",
-    "Es la especie del cotorro Tony, la mascota de Noah.",
-    "cotorra_argentina.jpg"
-  ),
-  new Bird(
-    "Cotorra Australiana",
-    "Melopsittacus undulatus",
-    "Es un ave de jaula muy popular, no solo por sus vivos colores sino también por su fácil adaptación.",
-    "cotorra_australiana.jpg"
-  ),
-  new Bird(
-    "Cotorra Argentina",
-    "Myiopsitta monachus",
-    "Es la especie del cotorro Tony, la mascota de Noah.",
-    "cotorra_argentina.jpg"
-  ),
-  new Bird(
-    "Cotorra Australiana",
-    "Melopsittacus undulatus",
-    "Es un ave de jaula muy popular, no solo por sus vivos colores sino también por su fácil adaptación.",
-    "cotorra_australiana.jpg"
-  ),
-  new Bird(
-    "Cotorra Argentina",
-    "Myiopsitta monachus",
-    "Es la especie del cotorro Tony, la mascota de Noah.",
-    "cotorra_argentina.jpg"
-  ),
-  new Bird(
-    "Cotorra Australiana",
-    "Melopsittacus undulatus",
-    "Es un ave de jaula muy popular, no solo por sus vivos colores sino también por su fácil adaptación.",
-    "cotorra_australiana.jpg"
-  ),
-  new Bird(
-    "Cotorra Argentina",
-    "Myiopsitta monachus",
-    "Es la especie del cotorro Tony, la mascota de Noah.",
-    "cotorra_argentina.jpg"
-  ),
-  new Bird(
-    "Cotorra Australiana",
-    "Melopsittacus undulatus",
-    "Es un ave de jaula muy popular, no solo por sus vivos colores sino también por su fácil adaptación.",
-    "cotorra_australiana.jpg"
-  ),
-  new Bird(
-    "Cotorra Argentina",
-    "Myiopsitta monachus",
-    "Es la especie del cotorro Tony, la mascota de Noah.",
-    "cotorra_argentina.jpg"
-  ),
-  new Bird(
-    "Cotorra Australiana",
-    "Melopsittacus undulatus",
-    "Es un ave de jaula muy popular, no solo por sus vivos colores sino también por su fácil adaptación.",
-    "cotorra_australiana.jpg"
-  ),
+let birds: Bird[] = [
+  {
+    id: crypto.randomUUID(),
+    name: "Cotorra Argentina",
+    scientificName: "Myiopsitta monachus",
+    description: "Es la especie del cotorro Tony, la mascota de Noah.",
+    imageURL: "cotorra_argentina.jpg",
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Cotorra Australiana",
+    scientificName: "Melopsittacus undulatus",
+    description: "Es un ave de jaula muy popular...",
+    imageURL: "cotorra_australiana.jpg",
+  },
 ];
 
 /*
@@ -95,7 +50,13 @@ app.get(`${BIRDS_PATH}:id`, (req, res) => {
 
 app.post(BIRDS_PATH, (req, res) => {
   const { name, scientificName, description, image } = req.body;
-  const newBird = new Bird(name, scientificName, description, image);
+  const newBird: Bird = {
+    name,
+    scientificName,
+    description,
+    imageURL: image,
+    id: crypto.randomUUID(),
+  };
   birds.push(newBird);
   res.status(201).send({
     message: "Bird succesfully created.",
