@@ -52,6 +52,10 @@ app.get(`${BIRDS_PATH}:id`, (req, res) => {
 
 app.post(BIRDS_PATH, (req, res) => {
 	const { name, scientificName, description, imageURL } = req.body;
+	if (!name || !scientificName || !description) {
+		res.status(400).send({ message: "Missing required fields." });
+		return;
+	}
 	const newBird: Bird = {
 		name,
 		scientificName,
