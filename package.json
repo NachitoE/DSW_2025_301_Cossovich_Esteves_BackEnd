@@ -1,25 +1,26 @@
 {
-  "name": "avistandoo-backend",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\""
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.12.1",
-  "devDependencies": {
-    "@types/express": "^5.0.3",
-    "tsc-watch": "^7.1.1",
-    "typescript": "^5.8.3"
-  },
-  "dependencies": {
-    "@types/cors": "^2.8.19",
-    "cors": "^2.8.5",
-    "express": "5.1.0",
-    "shared-types": "github:NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes"
-  }
+	"name": "avistandoo-backend",
+  "private": true,
+	"version": "1.0.1",
+	"type": "module",
+	"description": "",
+	"main": "app.js",
+	"scripts": {
+		"dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\""
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.12.1",
+	"devDependencies": {
+		"@types/express": "^5.0.3",
+		"tsc-watch": "^7.1.1",
+		"typescript": "^5.8.3"
+	},
+	"dependencies": {
+		"@types/cors": "^2.8.19",
+		"cors": "^2.8.5",
+		"express": "5.1.0",
+		"shared-types": "github:NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes"
+	}
 }
