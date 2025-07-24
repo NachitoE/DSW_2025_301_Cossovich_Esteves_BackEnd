@@ -2,6 +2,8 @@ import { Router } from "express";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { config } from "dotenv";
+import session from "express-session";
+
 config();
 
 const router = Router();
@@ -14,11 +16,20 @@ passport.use(
 			callbackURL: "http://localhost:3000/api/auth/google/callback",
 			passReqToCallback: true,
 		},
-		function (accessToken, refreshToken, profile, cb) {
-			//find or create user in db
+		function (req, accessToken, refreshToken, profile, cb) {
+			// save/load user on db | session
+			return cb(null, profile);
 		}
 	)
 );
+
+passport.serializeUser((user, done) => {
+	done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+	done(null, obj!);
+});
 
 router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 
