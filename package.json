@@ -1,6 +1,7 @@
 {
   "name": "avistandoo-backend",
-  "version": "1.0.0",
+  "private": true,
+  "version": "1.0.2",
   "type": "module",
   "description": "",
   "main": "app.js",
