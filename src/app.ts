@@ -2,14 +2,17 @@ import express from "express";
 import cors from "cors";
 import birdsRouter from "./routes/birds.js";
 import usersRouter from "./routes/users.js";
+import authRouter from "./routes/auth.js";
 
 const APP_PATH: string = "/";
 const BIRDS_PATH: string = "/api/birds/";
+const AUTH_PATH: string = "/api/auth/";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(BIRDS_PATH, birdsRouter);
+app.use(AUTH_PATH, authRouter);
 /*
 app.use(APP_PATH, (req, res) => 
 {
