@@ -18,6 +18,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@mikro-orm/core": "^6.4.16",
     "@types/cors": "^2.8.19",
     "@types/express-session": "^1.18.2",
     "@types/passport": "^1.0.17",
