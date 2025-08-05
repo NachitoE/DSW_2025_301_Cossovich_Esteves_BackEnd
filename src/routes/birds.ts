@@ -1,33 +1,15 @@
 import { Router } from "express";
-import type { Bird } from "shared-types";
-import crypto from "node:crypto";
+import { Bird } from "../entities/Bird.js";
 
 const router = Router();
 
-let birds: Bird[] = [
-  {
-    id: crypto.randomUUID(),
-    name: "Cotorra Argentina",
-    scientificName: "Myiopsitta monachus",
-    description: "Es la especie del cotorro Tony, la mascota de Noah.",
-    imageURL: "cotorra_argentina.jpg",
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Cotorra Australiana",
-    scientificName: "Melopsittacus undulatus",
-    description: "Es un ave de jaula muy popular...",
-    imageURL: "cotorra_australiana.jpg",
-  },
-];
-
-router.get("/", (req, res) => {
-  console.log("🐦 Petición recibida en /api/birds");
+router.get("/", async (req, res) => {
+  const birds = await req.em.findAll(Bird);
   res.json({ data: birds });
 });
 
-router.get(`${"/"}:id`, (req, res) => {
-  const bird = birds.find((x) => x.id === req.params.id);
+router.get(`${"/"}:id`, async (req, res) => {
+  const bird = await req.em.findOne(Bird, { _id: req.params.id });
   if (!bird) {
     res.status(404).send({ message: "bird not found" });
     return;
@@ -35,38 +17,38 @@ router.get(`${"/"}:id`, (req, res) => {
   res.json({ data: bird });
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const { name, scientificName, description, imageURL } = req.body;
-  const newBird: Bird = {
+  const createdBird = req.em.create(Bird, {
     name,
     scientificName,
     description,
     imageURL,
-    id: crypto.randomUUID(),
-  };
-  birds.push(newBird);
+  });
+  await req.em.persistAndFlush(createdBird);
   res.status(201).send({
     message: "Bird succesfully created.",
-    data: newBird,
+    data: createdBird,
   });
 });
 
-router.put(`${"/"}:id`, (req, res) => {
-  const birdIndex = birds.findIndex((x) => x.id === req.params.id);
-  if (birdIndex == -1) {
+router.put(`${"/"}:id`, async (req, res) => {
+  const bird = await req.em.findOne(Bird, { _id: req.params.id });
+  if (!bird) {
     res.status(404).send({ message: "bird not found" });
     return;
   }
-  const oldData = { ...birds[birdIndex] };
+  const oldData = { ...bird };
   const inputData = {
     name: req.body.name,
     scientificName: req.body.scientificName,
     description: req.body.description,
   };
-  birds[birdIndex] = { ...birds[birdIndex], ...inputData };
+  const replacedBird = req.em.assign(bird, inputData);
+  await req.em.persistAndFlush(replacedBird);
   res.status(200).send({
     message: "Replaced bird data.",
-    data: birds[birdIndex],
+    data: replacedBird,
     old_data: oldData,
   });
 });
