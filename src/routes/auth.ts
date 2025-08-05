@@ -27,7 +27,6 @@ passport.use(
           user = req.em.create(User, {
             googleId: profile.id,
             name: profile.displayName,
-            email: profile.emails?.[0]?.value || "",
             username:
               profile.displayName.replace(/\s+/g, "").toLowerCase() +
               profile.id.slice(0, 5),

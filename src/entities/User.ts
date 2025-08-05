@@ -15,8 +15,6 @@ export class User implements IUser {
   @Property()
   name!: string;
   @Property({ nullable: true })
-  email!: string;
-  @Property({ nullable: true })
   avatarURL!: string;
   @Property()
   role!: "admin" | "user";
