@@ -62,13 +62,15 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/login", session: true }),
   function (req, res) {
+    console.log("HOLAAAAAAAAAAAA?");
     res.redirect("http://localhost:5173/"); // redirige al frontend
   }
 );
 
 router.get("/me", (req, res) => {
   if (req.isAuthenticated()) {
-    res.json(req.user);
+    const { id, ...rest } = req.user as User; // SecFix-> destructure id to exclude it from response
+    res.json(rest);
   } else {
     res.status(401).json({ msg: "No autenticado" });
   }
