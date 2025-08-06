@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { Bird } from "../entities/Bird.js";
+import { User as IUser } from "shared-types";
+import { User } from "../entities/User.js";
 
 const router = Router();
 
@@ -18,7 +20,22 @@ router.get(`${"/"}:id`, async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { name, scientificName, description, imageURL } = req.body;
+  //check whether user body was sent
+  const userBody = req.body.user as IUser;
+  if (!userBody) {
+    return res.status(403).send({ message: "Non detected login." });
+  }
+  //check whether user is admin or exists
+  const user = (await req.em.findOne(User, {
+    googleId: userBody.googleId,
+  })) as User;
+
+  if (!user || user.role !== "admin") {
+    return res
+      .status(403)
+      .send({ message: "Only admins are allowed to create birds." });
+  }
+  const { name, scientificName, description, imageURL } = req.body.bird;
   const createdBird = req.em.create(Bird, {
     name,
     scientificName,
