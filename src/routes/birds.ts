@@ -2,6 +2,7 @@ import { Router } from "express";
 import { Bird } from "../entities/Bird.js";
 import { User as IUser } from "shared-types";
 import { User } from "../entities/User.js";
+import { ObjectId } from "@mikro-orm/mongodb";
 
 const router = Router();
 
@@ -11,7 +12,8 @@ router.get("/", async (req, res) => {
 });
 
 router.get(`${"/"}:id`, async (req, res) => {
-  const bird = await req.em.findOne(Bird, { _id: req.params.id });
+  console.log(req.params.id);
+  const bird = await req.em.findOne(Bird, { _id: new ObjectId(req.params.id) });
   if (!bird) {
     res.status(404).send({ message: "bird not found" });
     return;
@@ -50,7 +52,7 @@ router.post("/", async (req, res) => {
 });
 
 router.put(`${"/"}:id`, async (req, res) => {
-  const bird = await req.em.findOne(Bird, { _id: req.params.id });
+  const bird = await req.em.findOne(Bird, { _id: new ObjectId(req.params.id) });
   if (!bird) {
     res.status(404).send({ message: "bird not found" });
     return;

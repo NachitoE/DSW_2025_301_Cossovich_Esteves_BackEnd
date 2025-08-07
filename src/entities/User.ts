@@ -1,13 +1,11 @@
 import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
+import { ObjectId } from "@mikro-orm/mongodb";
 import { User as IUser } from "shared-types";
 
 @Entity({ collection: "users" })
 export class User implements IUser {
-  get id(): string {
-    return this._id;
-  }
   @PrimaryKey({ generated: "uuid" })
-  _id!: string;
+  _id!: ObjectId;
   @Property()
   username!: string;
   @Property()

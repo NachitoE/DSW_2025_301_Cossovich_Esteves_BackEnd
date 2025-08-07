@@ -2,7 +2,6 @@ import { Router } from "express";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { config } from "dotenv";
-import session from "express-session";
 import { User } from "../entities/User.js";
 
 config();
@@ -69,7 +68,7 @@ router.get(
 
 router.get("/me", (req, res) => {
   if (req.isAuthenticated()) {
-    const { id, ...rest } = req.user as User; // SecFix-> destructure id to exclude it from response
+    const { _id, ...rest } = req.user as User; // SecFix-> destructure id to exclude it from response
     res.json(rest);
   } else {
     res.status(401).json({ msg: "No autenticado" });
