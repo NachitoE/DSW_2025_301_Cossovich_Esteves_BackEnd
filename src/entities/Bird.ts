@@ -4,6 +4,9 @@ import { Bird as IBird } from "shared-types";
 
 @Entity({ collection: "birds" })
 export class Bird implements IBird {
+  get id() {
+    return this._id.toHexString();
+  }
   @PrimaryKey({ type: "string", generated: "uuid" })
   _id!: ObjectId;
   @Property()

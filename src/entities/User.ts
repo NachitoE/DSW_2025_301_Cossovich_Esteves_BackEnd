@@ -4,6 +4,9 @@ import { User as IUser } from "shared-types";
 
 @Entity({ collection: "users" })
 export class User implements IUser {
+  get id() {
+    return this._id.toHexString();
+  }
   @PrimaryKey({ generated: "uuid" })
   _id!: ObjectId;
   @Property()
