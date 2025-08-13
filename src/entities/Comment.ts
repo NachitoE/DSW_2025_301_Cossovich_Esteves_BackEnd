@@ -4,13 +4,17 @@ import { Comment as IComment } from "shared-types";
 
 @Entity({ collection: "comments" })
 export class Comment implements IComment {
-	get id() {
-		return this._id.toHexString();
-	}
-	@PrimaryKey({ generated: "uuid" })
-	_id!: ObjectId;
-	userId!: string;
-	birdId!: string;
-	text!: string;
-	createdAt!: Date;
+  get id() {
+    return this._id.toHexString();
+  }
+  @PrimaryKey({ generated: "uuid" })
+  _id!: ObjectId;
+  @Property()
+  userId!: string;
+  @Property()
+  birdId!: string;
+  @Property()
+  text!: string;
+  @Property()
+  createdAt!: Date;
 }
