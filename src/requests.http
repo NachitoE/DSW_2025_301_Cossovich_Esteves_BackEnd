@@ -21,3 +21,11 @@ Content-Type: application/json
     "description": "Su coloración es predominantemente azul, con pecho y partes inferiores blancas y cresta azul."
 }
 ### POST A COMMENT
+POST http://localhost:3000/api/comments/
+Content-Type: application/json
+
+{
+    "userId": "68915fee0beef58b8f799bd2",
+    "birdId": "68916c95375140650a33fce2",
+    "text": "Hola! Comentando."
+}
