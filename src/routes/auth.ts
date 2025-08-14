@@ -68,8 +68,8 @@ router.get(
 
 router.get("/me", (req, res) => {
   if (req.isAuthenticated()) {
-    const { _id, ...rest } = req.user as User; // SecFix-> destructure id to exclude it from response
-    res.json(rest);
+    const user = req.user as User; // SecFix-> destructure id to exclude it from response
+    res.json(user);
   } else {
     res.status(401).json({ msg: "No autenticado" });
   }

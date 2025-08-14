@@ -6,8 +6,8 @@ const router = Router();
 
 // get IComment body
 router.post("/", async (req, res) => {
-  const { text, birdId, userId } = req.body;
-
+  const { text, birdId, userId } = req.body.data;
+  console.log(text + " - " + birdId + " - " + userId);
   if (!text || !birdId || !userId) {
     return res.status(400).json({ msg: "Faltan campos obligatorios" });
   }

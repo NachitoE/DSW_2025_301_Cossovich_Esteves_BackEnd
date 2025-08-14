@@ -46,7 +46,7 @@ importers:
         version: 2.0.0
       shared-types:
         specifier: github:NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes
-        version: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/3bd2742d3a5a0b444a997a4f041ceeef9f9b815e
+        version: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/85c6c6c3ac9c117abb56c5c0e1baa87f9fe3924c
     devDependencies:
       '@types/express':
         specifier: ^5.0.3
@@ -391,8 +391,8 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
-  jsonfile@6.1.0:
-    resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
+  jsonfile@6.2.0:
+    resolution: {integrity: sha512-FGuPw30AdOIUTRMC2OMRtQV+jkVj2cfPqSeWXv1NEAJ1qZ5zb1X6z1mFhbfOB/iy3ssJCD+3KuZ8r8C3uVFlAg==}
 
   map-stream@0.1.0:
     resolution: {integrity: sha512-CkYQrPYZfWnu/DAmVCpTSX/xHpKZ80eKh2lAkyA6AJTef6bW+6JpbQZN5rofum7da+SyN1bi5ctTm+lTfcCW3g==}
@@ -602,9 +602,9 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/3bd2742d3a5a0b444a997a4f041ceeef9f9b815e:
-    resolution: {tarball: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/3bd2742d3a5a0b444a997a4f041ceeef9f9b815e}
-    version: 1.0.8
+  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/85c6c6c3ac9c117abb56c5c0e1baa87f9fe3924c:
+    resolution: {tarball: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/85c6c6c3ac9c117abb56c5c0e1baa87f9fe3924c}
+    version: 1.0.9
 
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -1050,7 +1050,7 @@ snapshots:
   fs-extra@11.3.0:
     dependencies:
       graceful-fs: 4.2.11
-      jsonfile: 6.1.0
+      jsonfile: 6.2.0
       universalify: 2.0.1
 
   function-bind@1.1.2: {}
@@ -1126,7 +1126,7 @@ snapshots:
 
   isexe@2.0.0: {}
 
-  jsonfile@6.1.0:
+  jsonfile@6.2.0:
     dependencies:
       universalify: 2.0.1
     optionalDependencies:
@@ -1305,7 +1305,7 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/3bd2742d3a5a0b444a997a4f041ceeef9f9b815e: {}
+  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/85c6c6c3ac9c117abb56c5c0e1baa87f9fe3924c: {}
 
   shebang-command@2.0.0:
     dependencies:

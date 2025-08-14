@@ -14,43 +14,45 @@ const APP_PATH: string = "/";
 const BIRDS_PATH: string = "/api/birds/";
 const AUTH_PATH: string = "/api/auth/";
 const COMMENTS_PATH: string = "/api/comments/";
+const USERS_PATH: string = "/api/users/";
 
 //----- Initialize app -----
 async function main() {
-	const orm = await MikroORM.init(mikroOrmConfig);
-	console.log("MikroORM inicializado");
-	const em = orm.em.fork() as MongoEntityManager; // get entity manager
-	//----- Express -----
-	const app = express();
-	app.use(
-		cors({
-			origin: "http://localhost:5173", // react
-			credentials: true,
-		})
-	);
-	app.use((req, res, next) => {
-		req.em = em.fork(); // fork a new EntityManager for each request
-		next();
-	});
-	app.use(express.json());
-	app.use(
-		session({
-			secret: process.env.SESSION_SECRET!,
-			resave: false,
-			saveUninitialized: false,
-		})
-	);
-	//----- Passport -----
-	app.use(passport.initialize());
-	app.use(passport.session());
+  const orm = await MikroORM.init(mikroOrmConfig);
+  console.log("MikroORM inicializado");
+  const em = orm.em.fork() as MongoEntityManager; // get entity manager
+  //----- Express -----
+  const app = express();
+  app.use(
+    cors({
+      origin: "http://localhost:5173", // react
+      credentials: true,
+    })
+  );
+  app.use((req, res, next) => {
+    req.em = em.fork(); // fork a new EntityManager for each request
+    next();
+  });
+  app.use(express.json());
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET!,
+      resave: false,
+      saveUninitialized: false,
+    })
+  );
+  //----- Passport -----
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-	//----- Routers -----
-	app.use(BIRDS_PATH, birdsRouter);
-	app.use(AUTH_PATH, authRouter);
-	app.use(COMMENTS_PATH, commentsRouter);
-	app.listen(3000, () => {
-		console.log("Listening at http://localhost:3000/");
-	});
+  //----- Routers -----
+  app.use(BIRDS_PATH, birdsRouter);
+  app.use(AUTH_PATH, authRouter);
+  app.use(COMMENTS_PATH, commentsRouter);
+  app.use(USERS_PATH, usersRouter);
+  app.listen(3000, () => {
+    console.log("Listening at http://localhost:3000/");
+  });
 }
 
 main();
