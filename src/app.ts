@@ -26,11 +26,11 @@ const USERS_PATH: string = "/api/users/";
 const BIRD_VISUAL_TRAITS_PATH: string = "/api/bird-visual-traits/";
 
 const API_DICT: Record<string, Router> = {
-	BIRDS_PATH: birdsRouter,
-	AUTH_PATH: authRouter,
-	COMMENTS_PATH: commentsRouter,
-	USERS_PATH: usersRouter,
-	BIRD_VISUAL_TRAITS_PATH: birdVisualTraitsRouter,
+	[BIRDS_PATH]: birdsRouter,
+	[AUTH_PATH]: authRouter,
+	[COMMENTS_PATH]: commentsRouter,
+	[USERS_PATH]: usersRouter,
+	[BIRD_VISUAL_TRAITS_PATH]: birdVisualTraitsRouter,
 };
 
 //----- Initialize app -----
@@ -64,9 +64,9 @@ async function main() {
 	//----- Initialize DB -----
 	initializeDatabase(em);
 	//----- Assign Routers -----
-	for (const [path, router] of Object.entries(API_DICT)) {
+	Object.entries(API_DICT).forEach(([path, router]) => {
 		app.use(path, router);
-	}
+	});
 	app.listen(3000, () => {
 		console.log("Listening at http://localhost:3000/");
 	});
