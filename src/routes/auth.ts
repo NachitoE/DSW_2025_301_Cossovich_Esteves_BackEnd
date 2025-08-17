@@ -71,8 +71,17 @@ router.get(
 
 router.get("/me", (req, res) => {
 	if (req.isAuthenticated()) {
-		const user = req.user as User; // SecFix-> destructure id to exclude it from response
+		const user = req.user as User;
 		res.json(user);
+	} else {
+		res.status(401).json({ msg: "No autenticado" });
+	}
+});
+
+router.get("/isAdmin", (req, res) => {
+	if (req.isAuthenticated()) {
+		const user = req.user as User;
+		res.json({ isAdmin: user.role === "admin" });
 	} else {
 		res.status(401).json({ msg: "No autenticado" });
 	}
