@@ -46,7 +46,7 @@ importers:
         version: 2.0.0
       shared-types:
         specifier: github:NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes
-        version: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/85c6c6c3ac9c117abb56c5c0e1baa87f9fe3924c
+        version: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/5bda28d0ebaac62d2581b0d4e2ef5d3503a75b7d
     devDependencies:
       '@types/express':
         specifier: ^5.0.3
@@ -109,8 +109,8 @@ packages:
   '@types/mime@1.3.5':
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
 
-  '@types/node@24.2.1':
-    resolution: {integrity: sha512-DRh5K+ka5eJic8CjH7td8QpYEV6Zo10gfRkjHCO3weqZHWDtAaSTFtl4+VMqOJ4N5jcuhZ9/l+yy8rVgw7BQeQ==}
+  '@types/node@24.3.0':
+    resolution: {integrity: sha512-aPTXCrfwnDLj4VvXrm+UUCQjNEvJgNA8s5F1cvwQU+3KNltTOkBm1j30uNLyqqPNe7gE3KFzImYoZEfLhp4Yow==}
 
   '@types/oauth@0.9.6':
     resolution: {integrity: sha512-H9TRCVKBNOhZZmyHLqFt9drPM9l+ShWiqqJijU1B8P3DX3ub84NjxDuy+Hjrz+fEca5Kwip3qPMKNyiLgNJtIA==}
@@ -602,9 +602,9 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/85c6c6c3ac9c117abb56c5c0e1baa87f9fe3924c:
-    resolution: {tarball: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/85c6c6c3ac9c117abb56c5c0e1baa87f9fe3924c}
-    version: 1.0.9
+  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/5bda28d0ebaac62d2581b0d4e2ef5d3503a75b7d:
+    resolution: {tarball: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/5bda28d0ebaac62d2581b0d4e2ef5d3503a75b7d}
+    version: 1.1.0
 
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -773,19 +773,19 @@ snapshots:
   '@types/body-parser@1.19.6':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 24.2.1
+      '@types/node': 24.3.0
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 24.2.1
+      '@types/node': 24.3.0
 
   '@types/cors@2.8.19':
     dependencies:
-      '@types/node': 24.2.1
+      '@types/node': 24.3.0
 
   '@types/express-serve-static-core@5.0.7':
     dependencies:
-      '@types/node': 24.2.1
+      '@types/node': 24.3.0
       '@types/qs': 6.14.0
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.5
@@ -804,13 +804,13 @@ snapshots:
 
   '@types/mime@1.3.5': {}
 
-  '@types/node@24.2.1':
+  '@types/node@24.3.0':
     dependencies:
       undici-types: 7.10.0
 
   '@types/oauth@0.9.6':
     dependencies:
-      '@types/node': 24.2.1
+      '@types/node': 24.3.0
 
   '@types/passport-google-oauth20@2.0.16':
     dependencies:
@@ -835,12 +835,12 @@ snapshots:
   '@types/send@0.17.5':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 24.2.1
+      '@types/node': 24.3.0
 
   '@types/serve-static@1.15.8':
     dependencies:
       '@types/http-errors': 2.0.5
-      '@types/node': 24.2.1
+      '@types/node': 24.3.0
       '@types/send': 0.17.5
 
   '@types/webidl-conversions@7.0.3': {}
@@ -1305,7 +1305,7 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/85c6c6c3ac9c117abb56c5c0e1baa87f9fe3924c: {}
+  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/5bda28d0ebaac62d2581b0d4e2ef5d3503a75b7d: {}
 
   shebang-command@2.0.0:
     dependencies:
