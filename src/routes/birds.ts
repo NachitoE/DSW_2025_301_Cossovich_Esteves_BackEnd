@@ -57,11 +57,14 @@ router.put(`${"/"}:id`, async (req, res) => {
 		res.status(404).send({ message: "bird not found" });
 		return;
 	}
+	const newData = req.body.data;
 	const oldData = { ...bird };
 	const inputData = {
-		name: req.body.name,
-		scientificName: req.body.scientificName,
-		description: req.body.description,
+		name: newData.name,
+		scientificName: newData.scientificName,
+		description: newData.description,
+		imageURL: newData.imageURL,
+		visualTraits: newData.visualTraits,
 	};
 	const replacedBird = req.em.assign(bird, inputData);
 	await req.em.persistAndFlush(replacedBird);

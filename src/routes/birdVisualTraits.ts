@@ -4,13 +4,23 @@ import {
 	BirdVisualTraitType,
 } from "shared-types";
 import { BirdVisualTrait } from "../entities/BirdVisualTrait.js";
-import { EntityManager } from "@mikro-orm/mongodb";
+import { EntityManager, ObjectId } from "@mikro-orm/mongodb";
 
 const router = Router();
 
 router.get("/", async (req, res) => {
 	const traits = await req.em.find(BirdVisualTrait, {});
-	res.json(traits);
+	res.json({ data: traits });
+});
+
+router.get("/:id", async (req, res) => {
+	const trait = await req.em.findOne(BirdVisualTrait, {
+		_id: new ObjectId(req.params.id),
+	});
+	if (!trait) {
+		return res.status(404).json({ message: "Trait not found" });
+	}
+	res.json({ data: trait });
 });
 
 export async function initBirdVisualTraits(em: EntityManager) {
