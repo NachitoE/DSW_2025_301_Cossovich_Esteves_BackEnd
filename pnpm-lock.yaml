@@ -47,6 +47,9 @@ importers:
       shared-types:
         specifier: github:NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes
         version: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/6f7ee7e6fcbc447e8d24a3b112318bfbe7ee2d5c
+      zod:
+        specifier: ^4.0.17
+        version: 4.0.17
     devDependencies:
       '@types/express':
         specifier: ^5.0.3
@@ -727,6 +730,9 @@ packages:
 
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+
+  zod@4.0.17:
+    resolution: {integrity: sha512-1PHjlYRevNxxdy2JZ8JcNAw7rX8V9P1AKkP+x/xZfxB0K5FYfuV+Ug6P/6NVSR2jHQ+FzDDoDHS04nYUsOIyLQ==}
 
 snapshots:
 
@@ -1417,3 +1423,5 @@ snapshots:
       isexe: 2.0.0
 
   wrappy@1.0.2: {}
+
+  zod@4.0.17: {}

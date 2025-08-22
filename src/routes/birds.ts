@@ -3,6 +3,7 @@ import { Bird } from "../entities/Bird.js";
 import { User as IUser } from "shared-types";
 import { User } from "../entities/User.js";
 import { ObjectId } from "@mikro-orm/mongodb";
+import { z } from "zod";
 
 const router = Router();
 
@@ -23,7 +24,18 @@ router.get(`${"/"}:id`, async (req, res) => {
 
 router.post("/", async (req, res) => {
 	//check whether user body was sent
-	const userBody = req.body.data.user as IUser;
+	const userBody = req.body.data.user;
+	const userSchema = z.object({
+		id: z.uuid(),
+		username: z.string(),
+		role: z.enum(["user", "admin"]),
+		googleId: z.string(),
+		name: z.string(),
+		avatarURL: z.string().optional(),
+	});
+	if (userSchema.parse(userBody) != userBody) {
+		return res.status(401).send({ message: "Invalid user data." });
+	}
 	if (!userBody) {
 		return res.status(403).send({ message: "Non detected login." });
 	}
@@ -57,19 +69,19 @@ router.put(`${"/"}:id`, async (req, res) => {
 		res.status(404).send({ message: "bird not found" });
 		return;
 	}
-	const newData = req.body.data;
+	const newData = req.body && req.body.data ? req.body.data : {};
 	const oldData = { ...bird };
-	const inputData = {
-		name: newData.name,
-		scientificName: newData.scientificName,
-		description: newData.description,
-		imageURL: newData.imageURL,
-		visualTraits: newData.visualTraits,
-	};
-	const replacedBird = req.em.assign(bird, inputData);
+
+	const replacedBird = req.em.assign(bird, {
+		name: newData.name ?? bird.name,
+		scientificName: newData.scientificName ?? bird.scientificName,
+		description: newData.description ?? bird.description,
+		imageURL: newData.imageURL ?? bird.imageURL,
+		visualTraits: newData.visualTraits ?? bird.visualTraits,
+	});
+
 	await req.em.persistAndFlush(replacedBird);
-	res.status(200).send({
-		message: "Replaced bird data.",
+	res.status(200).json({
 		data: replacedBird,
 		old_data: oldData,
 	});

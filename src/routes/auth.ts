@@ -74,7 +74,7 @@ router.get("/me", (req, res) => {
 		const user = req.user as User;
 		res.json(user);
 	} else {
-		res.status(401).json({ msg: "No autenticado" });
+		res.status(401).json({ message: "No autenticado" });
 	}
 });
 
@@ -83,13 +83,13 @@ router.get("/isAdmin", (req, res) => {
 		const user = req.user as User;
 		res.json({ isAdmin: user.role === "admin" });
 	} else {
-		res.status(401).json({ msg: "No autenticado" });
+		res.status(401).json({ message: "No autenticado" });
 	}
 });
 
 router.post("/logout", (req, res) => {
 	req.logout(() => {
-		res.json({ msg: "Logout exitoso" });
+		res.json({ message: "Logout exitoso" });
 	});
 });
 
