@@ -8,6 +8,7 @@ import {
 	MongoEntityManager,
 } from "@mikro-orm/mongodb";
 import mikroOrmConfig from "./mikro-orm.config.js";
+import { appConfig } from "./config/config.js";
 // --- Routers ---
 import { Router } from "express";
 import birdsRouter from "./routes/birds.js";
@@ -17,20 +18,13 @@ import commentsRouter from "./routes/comments.js";
 import birdVisualTraitsRouter from "./routes/birdVisualTraits.js";
 // --- Initializers ---
 import { initBirdVisualTraits } from "./routes/birdVisualTraits.js";
-// --- Paths ---
-const APP_PATH: string = "/";
-const BIRDS_PATH: string = "/api/birds/";
-const AUTH_PATH: string = "/api/auth/";
-const COMMENTS_PATH: string = "/api/comments/";
-const USERS_PATH: string = "/api/users/";
-const BIRD_VISUAL_TRAITS_PATH: string = "/api/bird-visual-traits/";
 
 const API_DICT: Record<string, Router> = {
-	[BIRDS_PATH]: birdsRouter,
-	[AUTH_PATH]: authRouter,
-	[COMMENTS_PATH]: commentsRouter,
-	[USERS_PATH]: usersRouter,
-	[BIRD_VISUAL_TRAITS_PATH]: birdVisualTraitsRouter,
+	[appConfig.paths.birds_path]: birdsRouter,
+	[appConfig.paths.auth_path]: authRouter,
+	[appConfig.paths.comments_path]: commentsRouter,
+	[appConfig.paths.users_path]: usersRouter,
+	[appConfig.paths.bird_visual_traits_path]: birdVisualTraitsRouter,
 };
 
 //----- Initialize app -----
@@ -42,7 +36,7 @@ async function main() {
 	const app = express();
 	app.use(
 		cors({
-			origin: "http://localhost:5173", // react
+			origin: appConfig.reactAppUrl, // react
 			credentials: true,
 		})
 	);
@@ -67,8 +61,8 @@ async function main() {
 	Object.entries(API_DICT).forEach(([path, router]) => {
 		app.use(path, router);
 	});
-	app.listen(3000, () => {
-		console.log("Listening at http://localhost:3000/");
+	app.listen(appConfig.port, () => {
+		console.log(`Listening at ${appConfig.apiBaseUrl}:${appConfig.port}`);
 	});
 }
 
