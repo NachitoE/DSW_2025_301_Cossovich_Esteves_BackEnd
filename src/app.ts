@@ -18,6 +18,7 @@ import commentsRouter from "./routes/comments.js";
 import birdVisualTraitsRouter from "./routes/birdVisualTraits.js";
 // --- Initializers ---
 import { initBirdVisualTraits } from "./routes/birdVisualTraits.js";
+import { Services } from "./services/Services.js";
 
 const API_DICT: Record<string, Router> = {
 	[appConfig.paths.birds_path]: birdsRouter,
@@ -41,7 +42,7 @@ async function main() {
 		})
 	);
 	app.use((req, res, next) => {
-		req.em = em.fork(); // fork a new EntityManager for each request
+		req.services = new Services(em); // inyect services middleware
 		next();
 	});
 	app.use(express.json());
@@ -67,7 +68,7 @@ async function main() {
 }
 
 function initializeDatabase(em: EntityManager) {
-	initBirdVisualTraits(em);
+	initBirdVisualTraits(new Services(em).birdVisualTrait);
 }
 
 main();

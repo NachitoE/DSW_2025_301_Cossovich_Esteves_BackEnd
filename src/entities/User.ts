@@ -7,6 +7,9 @@ export class User implements IUser {
   get id() {
     return this._id.toHexString();
   }
+  get objectId(){
+		return this._id;
+	}
   @PrimaryKey({ generated: "uuid" })
   _id!: ObjectId;
   @Property()

@@ -19,16 +19,18 @@ passport.use(
 		async function (req, accessToken, refreshToken, profile, cb) {
 			try {
 				//--- load or create user in database ---
-				console.log("req.em existe?", !!req.em);
-				let user = await req.em.findOne(User, { googleId: profile.id });
+				const userService = req.services.user;
+				let user = await userService.findByGoogleId(profile.id);
 
 				if (!user) {
-					user = req.em.create(User, {
+					user = await userService.create({
 						googleId: profile.id,
 						name: profile.displayName,
 						username:
-							profile.displayName.replace(/\s+/g, "").toLowerCase() +
-							profile.id.slice(0, 5),
+							userService.makeUserName(
+								profile.displayName,
+								profile.id
+							),
 						avatarURL: profile.photos?.[0]?.value || "",
 						role: "user",
 					});
@@ -38,9 +40,9 @@ passport.use(
 					// refresh image if changed
 					if (user.avatarURL !== profile.photos?.[0]?.value) {
 						user.avatarURL = profile.photos?.[0]?.value || "";
+						await userService.update(user);
 					}
 				}
-				await req.em.persistAndFlush(user);
 				cb(null, user);
 			} catch (error) {
 				console.error("Error in Google authentication:", error);

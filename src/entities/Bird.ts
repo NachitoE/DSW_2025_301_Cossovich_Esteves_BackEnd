@@ -7,6 +7,9 @@ export class Bird implements IBird {
 	get id() {
 		return this._id.toHexString();
 	}
+	get objectId(){
+		return this._id;
+	}
 	@PrimaryKey({ type: "string", generated: "uuid" })
 	_id!: ObjectId;
 	@Property()

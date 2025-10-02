@@ -3,28 +3,27 @@ import {
 	BirdVisualTrait as IBirdVisualTrait,
 	BirdVisualTraitType,
 } from "shared-types";
-import { BirdVisualTrait } from "../entities/BirdVisualTrait.js";
-import { EntityManager, ObjectId } from "@mikro-orm/mongodb";
+import { BirdVisualTraitService } from "../services/BirdVisualTraitsService.js";
 
 const router = Router();
 
 router.get("/", async (req, res) => {
-	const traits = await req.em.find(BirdVisualTrait, {});
+	const traits = await req.services.birdVisualTrait.getAll();
 	res.json({ data: traits });
 });
 
 router.get("/:id", async (req, res) => {
-	const trait = await req.em.findOne(BirdVisualTrait, {
-		_id: new ObjectId(req.params.id),
-	});
+	const trait = await req.services.birdVisualTrait.findById(
+		req.params.id
+	);
 	if (!trait) {
 		return res.status(404).json({ message: "Trait not found" });
 	}
 	res.json({ data: trait });
 });
 
-export async function initBirdVisualTraits(em: EntityManager) {
-	const count = await em.count(BirdVisualTrait, {});
+export async function initBirdVisualTraits(birdVisualTraitService: BirdVisualTraitService) {
+	const count = await birdVisualTraitService.count();
 	if (count === 0) {
 		console.log("Initializing BirdVisualTrait...");
 		const data = [
@@ -58,13 +57,12 @@ export async function initBirdVisualTraits(em: EntityManager) {
 			{ type: "TailShape", description: "Pointed" },
 			{ type: "TailShape", description: "Square" },
 		];
-		const placeholders = data.map((item) =>
-			em.create(BirdVisualTrait, {
+		const placeholders = data.map(async (item) =>
+			await birdVisualTraitService.create({
 				type: item.type as BirdVisualTraitType,
 				description: item.description,
 			})
 		);
-		await em.persistAndFlush(placeholders);
 	}
 }
 export default router;
