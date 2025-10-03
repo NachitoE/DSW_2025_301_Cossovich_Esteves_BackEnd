@@ -1,98 +1,84 @@
 import { Router } from "express";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { config } from "dotenv";
+import { appConfig } from "../config/config.js";
+import dotenv from "dotenv";
 import { User } from "../entities/User.js";
 
-config();
-
+dotenv.config();
 const router = Router();
 
 passport.use(
-	new GoogleStrategy(
-		{
-			clientID: process.env.GOOGLE_CLIENT_ID!,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-			callbackURL: "http://localhost:3000/api/auth/google/callback",
-			passReqToCallback: true,
-		},
-		async function (req, accessToken, refreshToken, profile, cb) {
-			try {
-				//--- load or create user in database ---
-				const userService = req.services.user;
-				let user = await userService.findByGoogleId(profile.id);
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      callbackURL: appConfig.apiFullUrl + "/api/auth/google/callback",
+      passReqToCallback: true,
+    },
+    async function (req, _accessToken, _refreshToken, profile, cb) {
+      try {
+        //--- load or create user in database ---
+        const userService = req.services.user;
+        let user = await userService.findByGoogleId(profile.id);
 
-				if (!user) {
-					user = await userService.create({
-						googleId: profile.id,
-						name: profile.displayName,
-						username:
-							userService.makeUserName(
-								profile.displayName,
-								profile.id
-							),
-						avatarURL: profile.photos?.[0]?.value || "",
-						role: "user",
-					});
-
-					console.log("Usuario creado:", user);
-				} else {
-					// refresh image if changed
-					if (user.avatarURL !== profile.photos?.[0]?.value) {
-						user.avatarURL = profile.photos?.[0]?.value || "";
-						await userService.update(user);
-					}
-				}
-				cb(null, user);
-			} catch (error) {
-				console.error("Error in Google authentication:", error);
-				cb(error);
-			}
-		}
-	)
+        if (!user) {
+          user = await userService.create({
+            googleId: profile.id,
+            name: profile.displayName,
+            username: userService.makeUserName(profile.displayName, profile.id),
+            avatarURL: profile.photos?.[0]?.value || "",
+            role: "user",
+          });
+          console.log("Usuario creado:", user);
+        } else {
+          // refresh image if changed
+          if (user.avatarURL !== profile.photos?.[0]?.value) {
+            user.avatarURL = profile.photos?.[0]?.value || "";
+            await userService.update(user);
+          }
+        }
+        cb(null, user);
+      } catch (error) {
+        console.error("Error in Google authentication:", error);
+        cb(error);
+      }
+    }
+  )
 );
-
-// serialize and deserialize user
-passport.serializeUser((user: any, done) => {
-	done(null, user); // -> just user id ideally
-});
-
-passport.deserializeUser((obj: any, done) => {
-	done(null, obj);
-});
 
 router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 
 router.get(
-	"/google/callback",
-	passport.authenticate("google", { failureRedirect: "/login", session: true }),
-	function (req, res) {
-		res.redirect("http://localhost:5173/"); // redirige al frontend
-	}
+  "/google/callback",
+  passport.authenticate("google", { session: false }),
+  function (req, res) {
+    const user = req.user as User;
+    console.log("Authenticated user:", user);
+    if (!user) {
+      return res.status(401).json({ message: "Authentication failed" });
+    }
+    // Successful authentication, redirect home
+    req.services.auth.generateAndSetTokenCookie(res, user);
+    res.redirect(appConfig.reactAppUrl);
+  }
 );
 
 router.get("/me", (req, res) => {
-	if (req.isAuthenticated()) {
-		const user = req.user as User;
-		res.json(user);
-	} else {
-		res.status(401).json({ message: "No autenticado" });
-	}
+  console.log("req.auth:", req.auth); // Debug
+  if (req.auth) {
+    res.json(req.auth);
+  } else {
+    res.status(401).json({ message: "No autenticado" });
+  }
 });
 
 router.get("/isAdmin", (req, res) => {
-	if (req.isAuthenticated()) {
-		const user = req.user as User;
-		res.json({ isAdmin: user.role === "admin" });
-	} else {
-		res.status(401).json({ message: "No autenticado" });
-	}
-});
-
-router.post("/logout", (req, res) => {
-	req.logout(() => {
-		res.json({ message: "Logout exitoso" });
-	});
+  if (req.auth) {
+    res.json({ isAdmin: req.auth.role === "admin" });
+  } else {
+    res.status(401).json({ message: "No autenticado" });
+  }
 });
 
 export default router;

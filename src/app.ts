@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import session from "express-session";
 import passport from "passport";
 import {
   EntityManager,
@@ -10,6 +9,7 @@ import {
 import mikroOrmConfig from "./mikro-orm.config.js";
 import { appConfig } from "./config/config.js";
 import { expressjwt } from "express-jwt";
+import cookieParser from "cookie-parser";
 // --- Routers ---
 import { Router } from "express";
 import birdsRouter from "./routes/birds.js";
@@ -42,11 +42,9 @@ async function main() {
       credentials: true,
     })
   );
-  app.use((req, res, next) => {
-    req.services = new Services(em); // inyect services middleware
-    next();
-  });
   app.use(express.json());
+  app.use(cookieParser());
+  //----- JWT -----
   app.use(
     expressjwt({
       secret: process.env.JWT_SECRET!,
@@ -60,21 +58,19 @@ async function main() {
           return req.headers.authorization.split(" ")[1];
         } else if (req.query && req.query.token) {
           return req.query.token as string;
+        } else if (req.cookies && req.cookies.access_token) {
+          return req.cookies.access_token;
         }
         return undefined;
       },
     })
   );
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET!,
-      resave: false,
-      saveUninitialized: false,
-    })
-  );
+  app.use((req, res, next) => {
+    req.services = new Services(em); // inyect services middleware
+    next();
+  });
   //----- Passport -----
   app.use(passport.initialize());
-  app.use(passport.session());
   //----- Initialize DB -----
   initializeDatabase(em);
   //----- Assign Routers -----
