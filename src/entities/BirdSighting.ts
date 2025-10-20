@@ -1,0 +1,1 @@
+import { BirdSighting as IBirdSighting } from "shared-types";
