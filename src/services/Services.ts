@@ -4,6 +4,7 @@ import { BirdService } from "./BirdService.js";
 import { CommentService } from "./CommentService.js";
 import { BirdVisualTraitService } from "./BirdVisualTraitsService.js";
 import { AuthService } from "./AuthService.js";
+import { BirdSightingService } from "./BirdSightingService.js";
 
 export class Services {
   constructor(private em: EntityManager) {}
@@ -26,5 +27,9 @@ export class Services {
 
   get auth(): AuthService {
     return new AuthService();
+  }
+
+  get birdSighting(): BirdSightingService{
+    return new BirdSightingService(this.em);
   }
 }

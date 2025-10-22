@@ -13,6 +13,7 @@ export interface AppConfig {
     comments_path: string;
     auth_path: string;
     bird_visual_traits_path: string;
+    bird_Sighting_path: string;
   };
 }
 const BIRDS_PATH: string = "/api/birds/";
@@ -20,6 +21,7 @@ const AUTH_PATH: string = "/api/auth/";
 const COMMENTS_PATH: string = "/api/comments/";
 const USERS_PATH: string = "/api/users/";
 const BIRD_VISUAL_TRAITS_PATH: string = "/api/bird-visual-traits/";
+const BIRD_SIGHTING_PATH: string = "/api/bird-sightings";
 
 export const appConfig: AppConfig = {
   apiBaseUrl: process.env.API_BASE_URL || "http://localhost",
@@ -37,5 +39,6 @@ export const appConfig: AppConfig = {
     comments_path: COMMENTS_PATH,
     auth_path: AUTH_PATH,
     bird_visual_traits_path: BIRD_VISUAL_TRAITS_PATH,
+    bird_Sighting_path:  BIRD_SIGHTING_PATH,
   },
 };

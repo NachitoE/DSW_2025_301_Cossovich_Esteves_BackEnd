@@ -17,6 +17,7 @@ import usersRouter from "./routes/users.js";
 import authRouter from "./routes/auth.js";
 import commentsRouter from "./routes/comments.js";
 import birdVisualTraitsRouter from "./routes/birdVisualTraits.js";
+import birdSightingRouter from "./routes/birdSightings.js";
 // --- Initializers ---
 import { initBirdVisualTraits } from "./routes/birdVisualTraits.js";
 import { Services } from "./services/Services.js";
@@ -27,6 +28,7 @@ const API_DICT: Record<string, Router> = {
   [appConfig.paths.comments_path]: commentsRouter,
   [appConfig.paths.users_path]: usersRouter,
   [appConfig.paths.bird_visual_traits_path]: birdVisualTraitsRouter,
+  [appConfig.paths.bird_Sighting_path]: birdSightingRouter,
 };
 
 //----- Initialize app -----
