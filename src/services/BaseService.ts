@@ -1,8 +1,9 @@
 import { EntityManager, ObjectId } from "@mikro-orm/mongodb";
 import IService from "./IService.js";
+import { Services } from "./Services.js";
 
 export default abstract class BaseService<T> implements IService<T>{
-    constructor(protected em: EntityManager){}
+    constructor(protected em: EntityManager, protected services: Services){}
     protected abstract getEntityClass(): new () => T;
     async getAll(): Promise<T[]> {
         return await this.em.findAll(this.getEntityClass());

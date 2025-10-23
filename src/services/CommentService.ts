@@ -1,10 +1,11 @@
 import { EntityManager } from "@mikro-orm/mongodb";
 import { Comment } from "../entities/Comment.js";
 import BaseService from "./BaseService.js";
+import { Services } from "./Services.js";
 
 export class CommentService extends BaseService<Comment>{
-    constructor(em: EntityManager) {
-        super(em);
+    constructor(em: EntityManager, services: Services) {
+        super(em, services);
     }
     protected getEntityClass(): new () => Comment {
         return Comment;

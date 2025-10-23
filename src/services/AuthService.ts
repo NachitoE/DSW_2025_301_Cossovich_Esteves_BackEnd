@@ -1,8 +1,14 @@
 import jwt from "jsonwebtoken";
 import { decode, verify } from "jsonwebtoken";
 import { User } from "../entities/User.js";
+import { Services } from "./Services.js";
 
 export class AuthService {
+  private readonly services: Services;
+
+    constructor(services: Services) {
+        this.services = services;
+    }
   generateToken(user: User): string {
     return jwt.sign(
       {
