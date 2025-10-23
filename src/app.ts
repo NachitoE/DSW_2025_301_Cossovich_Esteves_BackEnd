@@ -76,6 +76,26 @@ async function main() {
   Object.entries(API_DICT).forEach(([path, router]) => {
     app.use(path, router);
   });
+
+  //----- Error Handler for JWT -----
+  app.use((err: any, req: any, res: any, next: any) => {
+    if (err.name === 'UnauthorizedError') {
+      // Solo borrar la cookie si el token está EXPIRADO o es inválido
+      // NO borrar si es un problema de permisos (403)
+      if (err.code === 'credentials_required' || 
+          err.message.includes('jwt expired') || 
+          err.message.includes('invalid token')) {
+        req.services.authService.logout()
+      }
+      return res.status(401).json({ 
+        message: err.message || 'Token inválido o expirado',
+        code: err.code 
+      });
+    }
+    console.error(err);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  });
+
   app.listen(appConfig.port, () => {
     console.log(`Listening at ${appConfig.apiBaseUrl}:${appConfig.port}`);
   });

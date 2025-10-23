@@ -36,4 +36,12 @@ export class AuthService {
           : undefined,
     });
   }
+  removeTokenCookie(res: any){
+    res.clearCookie("access_token", {
+      domain:
+        process.env.NODE_ENV === "production"
+          ? "CHANGE_THIS_TO_DOMAIN_WHERE_FRONTEND_IS_HOSTED"
+          : undefined,
+    })
+  }
 }

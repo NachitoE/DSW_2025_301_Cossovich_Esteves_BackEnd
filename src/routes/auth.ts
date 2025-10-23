@@ -74,6 +74,14 @@ router.get("/me", async (req, res) => {
   }
 });
 
+router.get("/logout", (req, res) => {
+  if (req.auth) {
+    req.services.auth.removeTokenCookie(res);
+    res.json({ message: "token removido" });
+  } else {
+    res.status(401).json({ message: "No autenticado" });
+  }
+})
 router.get("/isAdmin", (req, res) => {
   if (req.auth) {
     res.json({ isAdmin: req.auth.role === "admin" });
