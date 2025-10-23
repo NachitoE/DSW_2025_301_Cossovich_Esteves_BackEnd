@@ -114,7 +114,7 @@ async function run() {
       name: "Hornero",
       scientificName: "Furnarius rufus",
       description: "Ave nacional de Argentina, conocida por construir nidos de barro en forma de horno.",
-      imageURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Furnarius_rufus_-near_Gualeguaychu%2C_Entre_Rios%2C_Argentina-8.jpg/320px-Furnarius_rufus_-near_Gualeguaychu%2C_Entre_Rios%2C_Argentina-8.jpg",
+      imageURL: "https://upload.wikimedia.org/wikipedia/commons/2/2f/HORNERO_Furnarius_rufus.jpg",
       visualTraits: [
         { birdVisualTraitId: beakShort.id },
         { birdVisualTraitId: plumageSolid.id },
@@ -127,7 +127,7 @@ async function run() {
       name: "Benteveo",
       scientificName: "Pitangus sulphuratus",
       description: "Ave muy común en zonas urbanas, conocida por su canto que suena como 'bien-te-veo'.",
-      imageURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Pitangus_sulphuratus_-Iguacu_National_Park%2C_Brazil-8.jpg/320px-Pitangus_sulphuratus_-Iguacu_National_Park%2C_Brazil-8.jpg",
+      imageURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Benteveo.jpg/2560px-Benteveo.jpg",
       visualTraits: [
         { birdVisualTraitId: beakHooked.id },
         { birdVisualTraitId: plumageSolid.id},
@@ -140,7 +140,7 @@ async function run() {
       name: "Calandria Grande",
       scientificName: "Mimus saturninus",
       description: "Ave cantora conocida por su capacidad de imitar sonidos de otras aves y ambientes.",
-      imageURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Mimus_saturninus_-Argentina-8.jpg/320px-Mimus_saturninus_-Argentina-8.jpg",
+      imageURL: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Mimus_saturninus_-Piraju%2C_Brasil-8.jpg",
       visualTraits: [
         { birdVisualTraitId: beakCurved.id },
         { birdVisualTraitId: plumageSpotted.id },
@@ -154,7 +154,7 @@ async function run() {
       name: "Picaflor Común",
       scientificName: "Chlorostilbon lucidus",
       description: "Colibrí pequeño de color verde brillante, muy común en jardines con flores.",
-      imageURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Chlorostilbon_lucidus_-Argentina-8.jpg/320px-Chlorostilbon_lucidus_-Argentina-8.jpg",
+      imageURL: "https://upload.wikimedia.org/wikipedia/commons/4/45/Chlorostilbon_lucidus_lucidus%2C_Calle_Avaroa%2C_Santa_Cruz%2C_Bolivia_2.jpg",
       visualTraits: [
         { birdVisualTraitId: beakShort.id },
         { birdVisualTraitId: plumageIridescent.id },
@@ -167,7 +167,7 @@ async function run() {
       name: "Tero",
       scientificName: "Vanellus chilensis",
       description: "Ave de campo muy ruidosa, conocida por defender agresivamente su territorio.",
-      imageURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Vanellus_chilensis_-Argentina-8.jpg/320px-Vanellus_chilensis_-Argentina-8.jpg",
+      imageURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Vanellus_chilensis_-Temaik%C3%A9n_Zoo-8b.jpg/250px-Vanellus_chilensis_-Temaik%C3%A9n_Zoo-8b.jpg",
       visualTraits: [
         { birdVisualTraitId: beakShort.id },
         { birdVisualTraitId: plumageSolid.id },
