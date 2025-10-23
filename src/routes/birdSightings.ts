@@ -13,8 +13,8 @@ router.post("/", async (req, res) => {
 	const data = req.body;
 	
 	const birdSighting = await req.services.birdSighting.create(data);
-	res.status(201)
-});
+	res.status(201).json({data: data})
+})
 
 router.put(`${"/"}:id`, async (req, res) => {
 	res.status(200)
