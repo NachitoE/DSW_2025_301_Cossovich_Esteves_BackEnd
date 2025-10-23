@@ -3,7 +3,7 @@ import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
 import { ObjectId } from "@mikro-orm/mongodb";
 
 
-@Entity({ collection: "birdSightings" })
+@Entity({ collection: "bird_sightings" })
     export class BirdSighting implements IBirdSighting{
    
     get id() {
