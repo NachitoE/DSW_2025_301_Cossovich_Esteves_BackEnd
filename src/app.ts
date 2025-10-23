@@ -19,7 +19,6 @@ import commentsRouter from "./routes/comments.js";
 import birdVisualTraitsRouter from "./routes/birdVisualTraits.js";
 import birdSightingRouter from "./routes/birdSightings.js";
 // --- Initializers ---
-import { initBirdVisualTraits } from "./routes/birdVisualTraits.js";
 import { Services } from "./services/Services.js";
 
 const API_DICT: Record<string, Router> = {
@@ -73,8 +72,6 @@ async function main() {
   });
   //----- Passport -----
   app.use(passport.initialize());
-  //----- Initialize DB -----
-  initializeDatabase(em);
   //----- Assign Routers -----
   Object.entries(API_DICT).forEach(([path, router]) => {
     app.use(path, router);
@@ -83,9 +80,4 @@ async function main() {
     console.log(`Listening at ${appConfig.apiBaseUrl}:${appConfig.port}`);
   });
 }
-
-function initializeDatabase(em: EntityManager) {
-  initBirdVisualTraits(new Services(em).birdVisualTrait);
-}
-
 main();

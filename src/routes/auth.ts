@@ -64,10 +64,11 @@ router.get(
   }
 );
 
-router.get("/me", (req, res) => {
-  console.log("req.auth:", req.auth); // Debug
+router.get("/me", async (req, res) => {
   if (req.auth) {
-    res.json(req.auth);
+    const user = await req.services.user.findById(req.auth.id)
+    if(!user) res.status(401).json({ message: "Token inválido" });
+    res.json({ data: user });
   } else {
     res.status(401).json({ message: "No autenticado" });
   }

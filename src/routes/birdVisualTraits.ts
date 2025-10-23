@@ -22,47 +22,4 @@ router.get("/:id", async (req, res) => {
 	res.json({ data: trait });
 });
 
-export async function initBirdVisualTraits(birdVisualTraitService: BirdVisualTraitService) {
-	const count = await birdVisualTraitService.count();
-	if (count === 0) {
-		console.log("Initializing BirdVisualTrait...");
-		const data = [
-			// BeakShape
-			{ type: "BeakShape", description: "Short" },
-			{ type: "BeakShape", description: "Large" },
-			{ type: "BeakShape", description: "Curved" },
-			{ type: "BeakShape", description: "Straight" },
-			{ type: "BeakShape", description: "Hooked" },
-
-			// PlumagePattern
-			{ type: "PlumagePattern", description: "Spotted" },
-			{ type: "PlumagePattern", description: "Striped" },
-			{ type: "PlumagePattern", description: "Solid color" },
-			{ type: "PlumagePattern", description: "Iridescent" },
-
-			// LegColor
-			{ type: "LegColor", description: "Yellow" },
-			{ type: "LegColor", description: "Black" },
-			{ type: "LegColor", description: "Pink" },
-			{ type: "LegColor", description: "Gray" },
-
-			// Size
-			{ type: "Size", description: "Small" },
-			{ type: "Size", description: "Medium" },
-			{ type: "Size", description: "Large" },
-
-			// TailShape
-			{ type: "TailShape", description: "Forked" },
-			{ type: "TailShape", description: "Rounded" },
-			{ type: "TailShape", description: "Pointed" },
-			{ type: "TailShape", description: "Square" },
-		];
-		const placeholders = data.map(async (item) =>
-			await birdVisualTraitService.create({
-				type: item.type as BirdVisualTraitType,
-				description: item.description,
-			})
-		);
-	}
-}
 export default router;

@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { decode, verify } from "jsonwebtoken";
 import { User } from "../entities/User.js";
 
 export class AuthService {
