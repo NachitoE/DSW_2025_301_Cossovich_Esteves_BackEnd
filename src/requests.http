@@ -29,3 +29,7 @@ Content-Type: application/json
     "birdId": "68916c95375140650a33fce2",
     "text": "Hola! Comentando."
 }
+
+### GET DIFF FILTERS
+
+GET http://localhost:3000/api/filters/different-filters

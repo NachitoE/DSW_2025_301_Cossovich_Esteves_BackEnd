@@ -10,7 +10,11 @@ router.post("/", async (req, res) => {
 
 });
 
-
+router.get("/different-filters", async (req, res) => {
+    const diffFilters = await req.services.FilterServices.getFilters();
+    res.status(200).json({"data": diffFilters})
+}
+);
 
 
 

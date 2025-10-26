@@ -48,6 +48,29 @@ export class FilterService {
 
     } 
 
+    async getFilters(){
+        const visualTraits = await this.services.birdVisualTrait.getAll();
+        // devolvería algo así =>
+        // [ 
+        // "Size" : ["id1", "id2", "id3"], // -> "Size" : ["Small", "Medium", "Big"]
+        // "BeakShape" : ["id4", "id5", "id6"] 
+        // ]
+
+        //front =>
+        // { "Size" : "Small" , "BeakShape" : "Pointed"}
+                
+        const diffVTRecord: Record<string, Array<string>> = {};
+        visualTraits.forEach(vT => {
+            if(!(vT.type in diffVTRecord)){
+                diffVTRecord[vT.type] = new Array<string>();
+            }
+            diffVTRecord[vT.type].push(vT.id) //ponemos el id de size: small por ejemplo...
+        })
+        return diffVTRecord
+    }
+
+
+
 }
 
 
