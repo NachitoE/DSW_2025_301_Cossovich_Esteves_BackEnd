@@ -57,8 +57,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       shared-types:
-        specifier: github:NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes
-        version: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/83feb3b655692d69fe022d90708004ec0bc25fc0
+        specifier: github:NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes#main
+        version: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/0b23b999d7c8da214f2f6de33a0322acacf7dd54
       zod:
         specifier: ^4.1.12
         version: 4.1.12
@@ -660,9 +660,9 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/83feb3b655692d69fe022d90708004ec0bc25fc0:
-    resolution: {tarball: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/83feb3b655692d69fe022d90708004ec0bc25fc0}
-    version: 1.1.4
+  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/0b23b999d7c8da214f2f6de33a0322acacf7dd54:
+    resolution: {tarball: https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/0b23b999d7c8da214f2f6de33a0322acacf7dd54}
+    version: 1.1.5
 
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -1415,7 +1415,7 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/83feb3b655692d69fe022d90708004ec0bc25fc0: {}
+  shared-types@https://codeload.github.com/NachitoE/DSW_2025_301_Cossovich_Esteves_SharedTypes/tar.gz/0b23b999d7c8da214f2f6de33a0322acacf7dd54: {}
 
   shebang-command@2.0.0:
     dependencies:

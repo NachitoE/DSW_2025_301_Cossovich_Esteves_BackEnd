@@ -2,6 +2,7 @@ import { EntityManager } from "@mikro-orm/mongodb";
 import { Bird } from "../entities/Bird.js";
 import { BirdVisualTrait } from "../entities/BirdVisualTrait.js";
 import { Services } from "./Services.js";
+import { FilterOptionsDTO, SelectedFilterOptionDTO } from "shared-types";
 
 
 export class FilterService {
@@ -11,8 +12,10 @@ export class FilterService {
         this.services = services;
     }
 
-    filterBirds(birds: Array<Bird>, filters:Array<BirdVisualTrait> ){
+    async filterBirds(birds: Array<Bird>, selectedFilters: Array<SelectedFilterOptionDTO> ){
         const filteredBirds: Array<Bird> = [];
+        const filters = (await Promise.all(selectedFilters.map(s => this.services.birdVisualTrait.findById(s.option))))
+            .filter((f): f is BirdVisualTrait => f !== null);
 
         const fIds:Array<string> = [];
         filters.forEach(filter =>{
@@ -48,7 +51,7 @@ export class FilterService {
 
     } 
 
-    async getFilters(){
+    async getFilters(): Promise<Array<FilterOptionsDTO>>{
         const visualTraits = await this.services.birdVisualTrait.getAll();
         // devolvería algo así =>
         // [ 
@@ -58,15 +61,23 @@ export class FilterService {
 
         //front =>
         // { "Size" : "Small" , "BeakShape" : "Pointed"}
-                
+               
+        const diffFilterOptions: Array<FilterOptionsDTO> = []
         const diffVTRecord: Record<string, Array<string>> = {};
         visualTraits.forEach(vT => {
             if(!(vT.type in diffVTRecord)){
                 diffVTRecord[vT.type] = new Array<string>();
             }
             diffVTRecord[vT.type].push(vT.id) //ponemos el id de size: small por ejemplo...
-        })
-        return diffVTRecord
+        });
+        // poner en el arr lo que recolectamos en el record
+        Object.keys(diffVTRecord).forEach((key) => {
+            diffFilterOptions.push({
+                filter: key,
+                options: diffVTRecord[key]
+            })
+        });
+        return diffFilterOptions
     }
 
 

@@ -5,8 +5,9 @@ const router = Router();
 
 router.post("/", async (req, res) => {
     const filters = req.body;
+    // check with zod if it is SelectedFilterOptionDTO 
     const birds = await req.services.bird.getAll();
-    const filteredBirds = req.services.FilterServices.filterBirds(birds, filters);
+    const filteredBirds = await req.services.FilterServices.filterBirds(birds, filters);
 
 });
 
