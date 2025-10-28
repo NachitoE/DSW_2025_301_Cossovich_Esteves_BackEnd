@@ -14,8 +14,9 @@ export class FilterService {
 
     async filterBirds(birds: Array<Bird>, selectedFilters: Array<SelectedFilterOptionDTO> ){
         const filteredBirds: Array<Bird> = [];
+        const nonEmptySelectedFilters = selectedFilters.filter(x => x.option)
         const filters = (await Promise.all(
-            selectedFilters.map(async (selFilter) => {
+            nonEmptySelectedFilters.map(async (selFilter) => {
                 const vT = await this.services.birdVisualTrait.findById(selFilter.option);
                 return vT || null;
             })

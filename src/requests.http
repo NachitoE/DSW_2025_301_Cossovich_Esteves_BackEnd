@@ -38,7 +38,11 @@ Content-Type: application/json
 
 [
     {
-    "filter": "BeakShape",
-    "option": "68fa5514a25fee785975a200"
+        "filter": "BeakShape",
+        "option": ""
+    },
+    {
+        "filter": "LegColor",
+        "option": "68fa5514a25fee785975a202"
     }
 ]
