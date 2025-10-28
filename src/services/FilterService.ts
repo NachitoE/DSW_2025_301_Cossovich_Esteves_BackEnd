@@ -14,14 +14,19 @@ export class FilterService {
 
     async filterBirds(birds: Array<Bird>, selectedFilters: Array<SelectedFilterOptionDTO> ){
         const filteredBirds: Array<Bird> = [];
-        const filters = (await Promise.all(selectedFilters.map(s => this.services.birdVisualTrait.findById(s.option))))
-            .filter((f): f is BirdVisualTrait => f !== null);
-
+        const filters = (await Promise.all(
+            selectedFilters.map(async (selFilter) => {
+                const vT = await this.services.birdVisualTrait.findById(selFilter.option);
+                return vT || null;
+            })
+        )).filter((vT): vT is BirdVisualTrait => vT !== null);
+        
+        console.log(filters)
         const fIds:Array<string> = [];
         filters.forEach(filter =>{
             fIds.push(filter.id);
         });
-
+        console.log("banana", fIds)
         birds.forEach( bird => {
 
             const ids: Array<string> = [];
@@ -31,9 +36,10 @@ export class FilterService {
             });
 
             var coincide = true;
-
-            ids.forEach(id => {
-                if(!fIds.includes(id)){
+            
+            fIds.forEach(filterId => {
+                console.log(ids.includes(filterId))
+                if(!ids.includes(filterId)){
                     coincide = false
                     
                 }
@@ -42,9 +48,10 @@ export class FilterService {
             if(coincide){
                 filteredBirds.push(bird);
             }
+            
                   
         });
-
+        
         return filteredBirds
 
 

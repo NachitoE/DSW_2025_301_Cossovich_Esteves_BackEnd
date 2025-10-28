@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { SelectedFilterOptionDTO } from "shared-types";
 import { z } from "zod";
 
 const router = Router();
@@ -17,6 +18,13 @@ router.get("/different-filters", async (req, res) => {
 }
 );
 
+router.post("/filter-birds", async (req, res) => {
+    const filters: Array<SelectedFilterOptionDTO> = req.body
+    const birds = await req.services.bird.getAll()
+    const diffFilters = await req.services.FilterServices.filterBirds(birds, filters);
+    res.status(200).json({"data": diffFilters})
+}
+);
 
 
 export default router

@@ -31,5 +31,14 @@ Content-Type: application/json
 }
 
 ### GET DIFF FILTERS
-
 GET http://localhost:3000/api/filters/different-filters
+### GET FILTERED BIRDS
+POST http://localhost:3000/api/filters/filter-birds
+Content-Type: application/json
+
+[
+    {
+    "filter": "BeakShape",
+    "option": "68fa5514a25fee785975a1fd"
+    }
+]
