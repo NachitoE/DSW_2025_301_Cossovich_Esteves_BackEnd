@@ -87,7 +87,7 @@ async function main() {
       if (err.code === 'credentials_required' || 
           err.message.includes('jwt expired') || 
           err.message.includes('invalid token')) {
-        req.services.authService.logout()
+        req.services?.authService?.logout()
       }
       return res.status(401).json({ 
         message: err.message || 'Token inválido o expirado',
