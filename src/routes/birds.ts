@@ -20,26 +20,11 @@ router.get(`${"/"}:id`, async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-	//check whether user body was sent
-	const userBody = req.body.data.user;
-	const userSchema = z.object({
-		id: z.uuid(),
-		username: z.string(),
-		role: z.enum(["user", "admin"]),
-		googleId: z.string(),
-		name: z.string(),
-		avatarURL: z.string().optional(),
-	});
-	if (userSchema.parse(userBody) != userBody) {
-		return res.status(401).send({ message: "Invalid user data." });
-	}
-	if (!userBody) {
-		return res.status(403).send({ message: "Non detected login." });
-	}
-	//check whether user is admin or exists
-	const user = await req.services.user.findByGoogleId(
-		userBody.googleId
-	) as User;
+	if (!req.auth) {
+		res.status(401).json({ message: "No autenticado" });
+		return;
+	} 
+	const user = await req.services.user.findById(req.auth.id)
 
 	if (!user || user.role !== "admin") {
 		return res
