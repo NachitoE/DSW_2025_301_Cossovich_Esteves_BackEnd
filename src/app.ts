@@ -47,6 +47,12 @@ async function main() {
   );
   app.use(express.json());
   app.use(cookieParser());
+
+    app.use((req, res, next) => {
+    req.services = new Services(em); // inyect services middleware
+    next();
+  });
+
   //----- JWT -----
   app.use(
     expressjwt({
@@ -68,10 +74,7 @@ async function main() {
       },
     })
   );
-  app.use((req, res, next) => {
-    req.services = new Services(em); // inyect services middleware
-    next();
-  });
+
   //----- Passport -----
   app.use(passport.initialize());
   //----- Assign Routers -----
@@ -84,10 +87,10 @@ async function main() {
     if (err.name === 'UnauthorizedError') {
       // Solo borrar la cookie si el token está EXPIRADO o es inválido
       // NO borrar si es un problema de permisos (403)
-      if (err.code === 'credentials_required' || 
+      if (err.code === 'invalid_token' || 
           err.message.includes('jwt expired') || 
           err.message.includes('invalid token')) {
-        req.services?.authService?.logout()
+        req.services.auth.removeTokenCookie(res)
       }
       return res.status(401).json({ 
         message: err.message || 'Token inválido o expirado',
