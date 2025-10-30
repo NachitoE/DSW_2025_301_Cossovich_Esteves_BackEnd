@@ -14,7 +14,6 @@ async function run() {
     const em = orm.em.fork();
 
     console.log("cleaning collections...");
-    // Para MongoDB, usar removeAll() con el repositorio
     await em.nativeDelete(Comment, {});
     await em.nativeDelete(BirdSighting, {});
     await em.nativeDelete(Bird, {});
@@ -38,240 +37,250 @@ async function run() {
       role: "user",
     } as any);
 
+    const user3 = em.create(User, {
+      username: "lucas.rodriguez",
+      googleId: "google-555666",
+      name: "Lucas Rodríguez",
+      avatarURL: "https://i.pravatar.cc/150?img=32",
+      role: "user",
+    } as any);
+
+    const admin = em.create(User, {
+      username: "admin",
+      googleId: "google-admin",
+      name: "Administrador",
+      avatarURL: "https://i.pravatar.cc/150?img=5",
+      role: "admin",
+    } as any);
+
     await em.flush();
 
-    console.log("seeding birdvisualtraits...");
-    // BeakShape
-    const beakShort = em.create(BirdVisualTrait, {
-      type: "BeakShape",
-      description: "Short",
-    } as any);
-    const beakCurved = em.create(BirdVisualTrait, {
-      type: "BeakShape",
-      description: "Curved",
-    } as any);
-    const beakHooked = em.create(BirdVisualTrait, {
-      type: "BeakShape",
-      description: "Hooked",
-    } as any);
+    console.log("seeding bird visual traits (nuevos tipos en español)...");
 
-    // PlumagePattern
-    const plumageSpotted = em.create(BirdVisualTrait, {
-      type: "PlumagePattern",
-      description: "Spotted",
-    } as any);
-    const plumageSolid = em.create(BirdVisualTrait, {
-      type: "PlumagePattern",
-      description: "Solid color",
-    } as any);
-    const plumageIridescent = em.create(BirdVisualTrait, {
-      type: "PlumagePattern",
-      description: "Iridescent",
-    } as any);
+    // Forma de pico
+    const picoRecto = em.create(BirdVisualTrait, { type: "Forma de pico", description: "Recto" } as any);
+    const picoCurvado = em.create(BirdVisualTrait, { type: "Forma de pico", description: "Curveado" } as any);
+    const picoGancho = em.create(BirdVisualTrait, { type: "Forma de pico", description: "En gancho" } as any);
 
-    // LegColor
-    const legYellow = em.create(BirdVisualTrait, {
-      type: "LegColor",
-      description: "Yellow",
-    } as any);
-    const legBlack = em.create(BirdVisualTrait, {
-      type: "LegColor",
-      description: "Black",
-    } as any);
-    const legPink = em.create(BirdVisualTrait, {
-      type: "LegColor",
-      description: "Pink",
-    } as any);
+    // Patrón de plumas
+    const plumajeTricolor = em.create(BirdVisualTrait, { type: "Patrón de plumas", description: "Tricolor" } as any);
+    const plumajeBicolor = em.create(BirdVisualTrait, { type: "Patrón de plumas", description: "Bicolor" } as any);
+    const plumajeSolido = em.create(BirdVisualTrait, { type: "Patrón de plumas", description: "Sólido" } as any);
+    const plumajeIridescente = em.create(BirdVisualTrait, { type: "Patrón de plumas", description: "Iridescente" } as any); // fix
 
-    // Size
-    const sizeSmall = em.create(BirdVisualTrait, {
-      type: "Size",
-      description: "Small",
-    } as any);
-    const sizeMedium = em.create(BirdVisualTrait, {
-      type: "Size",
-      description: "Medium",
-    } as any);
-    const sizeLarge = em.create(BirdVisualTrait, {
-      type: "Size",
-      description: "Large",
-    } as any);
+    // Color de patas
+    const patasAmarillas = em.create(BirdVisualTrait, { type: "Color de patas", description: "Amarillo" } as any);
+    const patasNegras = em.create(BirdVisualTrait, { type: "Color de patas", description: "Negro" } as any);
+    const patasRosadas = em.create(BirdVisualTrait, { type: "Color de patas", description: "Rosado" } as any);
 
-    // TailShape
-    const tailForked = em.create(BirdVisualTrait, {
-      type: "TailShape",
-      description: "Forked",
-    } as any);
-    const tailRounded = em.create(BirdVisualTrait, {
-      type: "TailShape",
-      description: "Rounded",
-    } as any);
+    // Tamaño Ave
+    const tamanoPequeno = em.create(BirdVisualTrait, { type: "Tamaño Ave", description: "Pequeño" } as any);
+    const tamanoMediano = em.create(BirdVisualTrait, { type: "Tamaño Ave", description: "Mediano" } as any);
+    const tamanoGrande = em.create(BirdVisualTrait, { type: "Tamaño Ave", description: "Grande" } as any);
 
     await em.flush();
 
     console.log("creating birds...");
+
+    // Cotorra Argentina
+    const cotorra = em.create(Bird, {
+      name: "Cotorra Argentina",
+      scientificName: "Myiopsitta monachus",
+      description: "Loro de tamaño mediano, verde con abdomen grisáceo; común en áreas urbanas y rurales.",
+      imageURL: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSoXuoAYmrnC8mJnMWZQ6mPhPPLLEdNR6woCzpkBOK_DNs2pUAHzyYsDQIV3zKUTACkP4BplHpCdijbqZyEEMumLeO72UaC-XEcKZvz2HY",
+      visualTraits: [
+        { birdVisualTraitId: picoGancho.id },
+        { birdVisualTraitId: plumajeBicolor.id },
+        { birdVisualTraitId: patasNegras.id }, // grisáceas en vida real; se aproxima
+        { birdVisualTraitId: tamanoMediano.id },
+      ],
+    } as any);
+
+    // Fiofío común (corrige género)
+    const fiofio = em.create(Bird, {
+      name: "Fiofío Común",
+      scientificName: "Elaenia parvirostris",
+      description: "Tiránido pequeño, oliva/grisáceo; pico recto y fino; muy frecuente en arboledas.",
+      imageURL: "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/81493801/900",
+      visualTraits: [
+        { birdVisualTraitId: picoRecto.id },
+        { birdVisualTraitId: plumajeSolido.id },
+        { birdVisualTraitId: patasNegras.id },
+        { birdVisualTraitId: tamanoPequeno.id },
+      ],
+    } as any);
+
+    // Paloma (Columba livia)
+    const paloma = em.create(Bird, {
+      name: "Paloma",
+      scientificName: "Columba livia",
+      description: "Paloma urbana común; gris con barras alares y cuello iridiscente.",
+      imageURL: "https://inaturalist-open-data.s3.amazonaws.com/photos/96934693/original.jpg",
+      visualTraits: [
+        { birdVisualTraitId: picoRecto.id },
+        { birdVisualTraitId: plumajeTricolor.id }, // gris + barras + iridiscencias
+        { birdVisualTraitId: patasRosadas.id },
+        { birdVisualTraitId: tamanoMediano.id },
+      ],
+    } as any);
+
+    // Tordo renegrido (Molothrus bonariensis)  ← corrige especie local
+    const tordo = em.create(Bird, {
+      name: "Tordo Renegrido",
+      scientificName: "Molothrus bonariensis",
+      description: "Ictérido común; macho negro con brillo iridiscente, hembra parda.",
+      imageURL: "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/245438551/900",
+      visualTraits: [
+        { birdVisualTraitId: picoRecto.id },
+        { birdVisualTraitId: plumajeIridescente.id }, // por el macho
+        { birdVisualTraitId: patasNegras.id },
+        { birdVisualTraitId: tamanoMediano.id },
+      ],
+    } as any);
+
+    // Gorrión
+    const gorron = em.create(Bird, {
+      name: "Gorrión",
+      scientificName: "Passer domesticus",
+      description: "Pequeña ave granívora, muy asociada a asentamientos humanos; patrón bicolor en muchos individuos.",
+      imageURL: "https://upload.wikimedia.org/wikipedia/commons/d/df/Huismus%2C_man.jpg",
+      visualTraits: [
+        { birdVisualTraitId: picoRecto.id },
+        { birdVisualTraitId: plumajeBicolor.id },
+        { birdVisualTraitId: patasRosadas.id },
+        { birdVisualTraitId: tamanoPequeno.id },
+      ],
+    } as any);
+
+    // Pirincha (Guira guira)  ← corrige pico/patas
+    const pirincha = em.create(Bird, {
+      name: "Pirincha",
+      scientificName: "Guira guira",
+      description: "Cucúlido gregario con cresta; plumaje contrastado y cola larga.",
+      imageURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Guira_guira.jpg/250px-Guira_guira.jpg",
+      visualTraits: [
+        { birdVisualTraitId: picoCurvado.id },
+        { birdVisualTraitId: plumajeTricolor.id },
+        { birdVisualTraitId: patasAmarillas.id },
+        { birdVisualTraitId: tamanoMediano.id },
+      ],
+    } as any);
+
+    // Carancho (Caracara plancus)
+    const carancho = em.create(Bird, {
+      name: "Carancho",
+      scientificName: "Caracara plancus",
+      description: "Ave rapaz carroñera de tamaño grande con pico en gancho; frecuente en pastizales y bordes urbanos.",
+      imageURL: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTrD39IUwDmwVL2F-CvJ9xgrFS0BiXPKW_jC91F9C8NIAZNX0vF8yNjmJ4n-jVx-cekMlYHuLhjcRszctTWkQ8LX_8mzk-9cv_Mh0Vdbw",
+      visualTraits: [
+        { birdVisualTraitId: picoGancho.id },
+        { birdVisualTraitId: plumajeTricolor.id },
+        { birdVisualTraitId: patasAmarillas.id },
+        { birdVisualTraitId: tamanoGrande.id },
+      ],
+    } as any);
+
+    // Hornero
     const hornero = em.create(Bird, {
       name: "Hornero",
       scientificName: "Furnarius rufus",
-      description: "Ave nacional de Argentina, conocida por construir nidos de barro en forma de horno.",
+      description: "Ave nacional de Argentina, construye nidos de barro con forma de horno.",
       imageURL: "https://upload.wikimedia.org/wikipedia/commons/2/2f/HORNERO_Furnarius_rufus.jpg",
       visualTraits: [
-        { birdVisualTraitId: beakShort.id },
-        { birdVisualTraitId: plumageSolid.id },
-        { birdVisualTraitId: legBlack.id },
-        { birdVisualTraitId: sizeMedium.id },
+        { birdVisualTraitId: picoRecto.id },
+        { birdVisualTraitId: plumajeSolido.id },
+        { birdVisualTraitId: patasRosadas.id }, // corrige
+        { birdVisualTraitId: tamanoMediano.id },
       ],
     } as any);
 
-    const benteveo = em.create(Bird, {
-      name: "Benteveo",
-      scientificName: "Pitangus sulphuratus",
-      description: "Ave muy común en zonas urbanas, conocida por su canto que suena como 'bien-te-veo'.",
-      imageURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Benteveo.jpg/2560px-Benteveo.jpg",
-      visualTraits: [
-        { birdVisualTraitId: beakHooked.id },
-        { birdVisualTraitId: plumageSolid.id},
-        { birdVisualTraitId: legBlack.id },
-        { birdVisualTraitId: sizeMedium.id },
-      ],
-    } as any);
-
-    const calandria = em.create(Bird, {
-      name: "Calandria Grande",
-      scientificName: "Mimus saturninus",
-      description: "Ave cantora conocida por su capacidad de imitar sonidos de otras aves y ambientes.",
-      imageURL: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Mimus_saturninus_-Piraju%2C_Brasil-8.jpg",
-      visualTraits: [
-        { birdVisualTraitId: beakCurved.id },
-        { birdVisualTraitId: plumageSpotted.id },
-        { birdVisualTraitId: legYellow.id },
-        { birdVisualTraitId: sizeMedium.id },
-        { birdVisualTraitId: tailRounded.id },
-      ],
-    } as any);
-
+    // Picaflor / Colibrí
     const picaflor = em.create(Bird, {
       name: "Picaflor Común",
       scientificName: "Chlorostilbon lucidus",
-      description: "Colibrí pequeño de color verde brillante, muy común en jardines con flores.",
-      imageURL: "https://upload.wikimedia.org/wikipedia/commons/4/45/Chlorostilbon_lucidus_lucidus%2C_Calle_Avaroa%2C_Santa_Cruz%2C_Bolivia_2.jpg",
+      description: "Colibrí pequeño de color verde brillante, con pico fino y recto adaptado a néctar.",
+      imageURL: "https://www.ecoregistros.org/site/images/dataimages/2018/03/13/253853/PICAFLOR-COMUN-PDE-_MG_1954.jpg",
       visualTraits: [
-        { birdVisualTraitId: beakShort.id },
-        { birdVisualTraitId: plumageIridescent.id },
-        { birdVisualTraitId: sizeSmall.id },
-        { birdVisualTraitId: tailForked.id },
+        { birdVisualTraitId: picoRecto.id },
+        { birdVisualTraitId: plumajeIridescente.id },
+        { birdVisualTraitId: patasNegras.id },
+        { birdVisualTraitId: tamanoPequeno.id },
       ],
     } as any);
 
-    const tero = em.create(Bird, {
-      name: "Tero",
-      scientificName: "Vanellus chilensis",
-      description: "Ave de campo muy ruidosa, conocida por defender agresivamente su territorio.",
-      imageURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Vanellus_chilensis_-Temaik%C3%A9n_Zoo-8b.jpg/250px-Vanellus_chilensis_-Temaik%C3%A9n_Zoo-8b.jpg",
+    // Benteveo (extra para que el total sea 11)
+    const benteveo = em.create(Bird, {
+      name: "Benteveo",
+      scientificName: "Pitangus sulphuratus",
+      description: "Ave conspicua con ceja blanca y vientre amarillo intenso; frecuente en áreas abiertas urbanas.",
+      imageURL: "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/302089971/900",
       visualTraits: [
-        { birdVisualTraitId: beakShort.id },
-        { birdVisualTraitId: plumageSolid.id },
-        { birdVisualTraitId: legPink.id },
-        { birdVisualTraitId: sizeMedium.id },
+        { birdVisualTraitId: picoRecto.id },
+        { birdVisualTraitId: plumajeTricolor.id },
+        { birdVisualTraitId: patasNegras.id },
+        { birdVisualTraitId: tamanoMediano.id },
+      ],
+    } as any);
+
+    // Chingolo (extra)
+    const chingolo = em.create(Bird, {
+      name: "Chingolo",
+      scientificName: "Zonotrichia capensis",
+      description: "Gorrión americano muy común; cabeza listada, canto característico.",
+      imageURL: "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/321114171/900",
+      visualTraits: [
+        { birdVisualTraitId: picoRecto.id },
+        { birdVisualTraitId: plumajeTricolor.id },
+        { birdVisualTraitId: patasRosadas.id },
+        { birdVisualTraitId: tamanoPequeno.id },
       ],
     } as any);
 
     await em.flush();
 
     console.log("creating sightings...");
-    const sighting1 = em.create(BirdSighting, {
-      dateTime: new Date("2025-10-15T08:30:00"),
-      ubicationLatitude: -34.6037,
-      ubicationLongitude: -58.3816,
-      BirdID: hornero.id,
-      UserID: user1.id,
-    } as any);
-
-    const sighting2 = em.create(BirdSighting, {
-      dateTime: new Date("2025-10-16T14:20:00"),
-      ubicationLatitude: -34.6158,
-      ubicationLongitude: -58.4333,
-      BirdID: benteveo.id,
-      UserID: user1.id,
-    } as any);
-
-    const sighting3 = em.create(BirdSighting, {
-      dateTime: new Date("2025-10-18T09:15:00"),
-      ubicationLatitude: -34.5875,
-      ubicationLongitude: -58.3974,
-      BirdID: picaflor.id,
-      UserID: user2.id,
-    } as any);
-
-    const sighting4 = em.create(BirdSighting, {
-      dateTime: new Date("2025-10-20T16:45:00"),
-      ubicationLatitude: -34.6083,
-      ubicationLongitude: -58.3712,
-      BirdID: calandria.id,
-      UserID: user2.id,
-    } as any);
-
-    const sighting5 = em.create(BirdSighting, {
-      dateTime: new Date("2025-10-22T07:00:00"),
-      ubicationLatitude: -34.5950,
-      ubicationLongitude: -58.4200,
-      BirdID: tero.id,
-      UserID: user1.id,
-    } as any);
+    const sightings = [
+      em.create(BirdSighting, { dateTime: new Date("2025-10-15T08:30:00"), ubicationLatitude: -34.6037, ubicationLongitude: -58.3816, BirdID: cotorra.id, UserID: user1.id } as any),
+      em.create(BirdSighting, { dateTime: new Date("2025-10-16T14:20:00"), ubicationLatitude: -34.6158, ubicationLongitude: -58.4333, BirdID: fiofio.id, UserID: user1.id } as any),
+      em.create(BirdSighting, { dateTime: new Date("2025-10-18T09:15:00"), ubicationLatitude: -34.5875, ubicationLongitude: -58.3974, BirdID: picaflor.id, UserID: user2.id } as any),
+      em.create(BirdSighting, { dateTime: new Date("2025-10-20T16:45:00"), ubicationLatitude: -34.6083, ubicationLongitude: -58.3712, BirdID: paloma.id, UserID: user2.id } as any),
+      em.create(BirdSighting, { dateTime: new Date("2025-10-22T07:00:00"), ubicationLatitude: -34.5950, ubicationLongitude: -58.4200, BirdID: carancho.id, UserID: user3.id } as any),
+      em.create(BirdSighting, { dateTime: new Date("2025-10-23T10:30:00"), ubicationLatitude: -34.6000, ubicationLongitude: -58.4200, BirdID: gorron.id, UserID: user1.id } as any),
+      em.create(BirdSighting, { dateTime: new Date("2025-10-24T12:00:00"), ubicationLatitude: -34.6100, ubicationLongitude: -58.4300, BirdID: tordo.id, UserID: user2.id } as any),
+      // extras para las nuevas aves
+      em.create(BirdSighting, { dateTime: new Date("2025-10-24T17:40:00"), ubicationLatitude: -32.9442, ubicationLongitude: -60.6505, BirdID: benteveo.id, UserID: user3.id } as any),
+      em.create(BirdSighting, { dateTime: new Date("2025-10-25T07:55:00"), ubicationLatitude: -32.9500, ubicationLongitude: -60.6500, BirdID: chingolo.id, UserID: user1.id } as any),
+    ];
+    for (const s of sightings) {
+      em.persist(s);
+    }
 
     await em.flush();
 
-    console.log("💬 Creando comentarios...");
-    const comment1 = em.create(Comment, {
-      userId: user1.id,
-      birdId: hornero.id,
-      text: "¡Vi uno construyendo su nido en el parque! Increíble verlos trabajar con barro.",
-      createdAt: new Date("2025-10-15T10:00:00"),
-    } as any);
-
-    const comment2 = em.create(Comment, {
-      userId: user2.id,
-      birdId: benteveo.id,
-      text: "Esta ave es muy común en mi barrio. Su canto es inconfundible, especialmente temprano en la mañana.",
-      createdAt: new Date("2025-10-16T15:30:00"),
-    } as any);
-
-    const comment3 = em.create(Comment, {
-      userId: user1.id,
-      birdId: picaflor.id,
-      text: "Qué hermosos son los colibríes. Tengo un bebedero en mi jardín y vienen varios todos los días.",
-      createdAt: new Date("2025-10-18T10:00:00"),
-    } as any);
-
-    const comment4 = em.create(Comment, {
-      userId: user1.id,
-      birdId: calandria.id,
-      text: "Ave emblemática de Argentina. Su canto puede durar varios minutos sin parar.",
-      createdAt: new Date("2025-10-20T17:00:00"),
-    } as any);
-
-    const comment5 = em.create(Comment, {
-      userId: user2.id,
-      birdId: tero.id,
-      text: "Cuidado al acercarte cuando tienen pichones, son muy territoriales y pueden atacar.",
-      createdAt: new Date("2025-10-22T08:00:00"),
-    } as any);
-
-    const comment6 = em.create(Comment, {
-      userId: user2.id,
-      birdId: hornero.id,
-      text: "El hornero es el ave nacional argentina desde 1928. Sus nidos pueden durar varios años.",
-      createdAt: new Date("2025-10-21T12:00:00"),
-    } as any);
+    console.log("creating comments...");
+    const comments = [
+      em.create(Comment, { userId: user1.id, birdId: cotorra.id, text: "Vi una bandada de cotorras en los eucaliptos, mucha actividad por la tarde.", createdAt: new Date("2025-10-15T10:00:00") } as any),
+      em.create(Comment, { userId: user2.id, birdId: picaflor.id, text: "Vienen seguido al bebedero, colorido espectacular por la mañana.", createdAt: new Date("2025-10-18T10:00:00") } as any),
+      em.create(Comment, { userId: user3.id, birdId: carancho.id, text: "Vi un carancho alimentándose cerca de la ruta, impresionante vuelo.", createdAt: new Date("2025-10-22T08:00:00") } as any),
+      em.create(Comment, { userId: user1.id, birdId: paloma.id, text: "Palomas por montón en la plaza principal, comportamiento muy sociable con la gente.", createdAt: new Date("2025-10-20T17:00:00") } as any),
+      em.create(Comment, { userId: user2.id, birdId: gorron.id, text: "Los gorriones están anidando en los aleros de mi casa.", createdAt: new Date("2025-10-21T12:00:00") } as any),
+      em.create(Comment, { userId: user3.id, birdId: tordo.id, text: "Tordos formando grupos ruidosos al amanecer.", createdAt: new Date("2025-10-24T13:00:00") } as any),
+      // comentarios para las nuevas aves
+      em.create(Comment, { userId: admin.id, birdId: benteveo.id, text: "Muy activo en cables y postes; el contraste amarillo-blanco lo delata.", createdAt: new Date("2025-10-24T18:00:00") } as any),
+      em.create(Comment, { userId: user1.id, birdId: chingolo.id, text: "Canto bien marcado desde arbustos bajos, se dejó ver cerca.", createdAt: new Date("2025-10-25T08:30:00") } as any),
+    ];
+    for (const c of comments) {
+      em.persist(c);
+    }
 
     await em.flush();
 
     console.log("\n✅ Seed completado exitosamente!");
-    console.log(`   - ${3} usuarios creados`);
-    console.log(`   - ${15} rasgos visuales creados`);
-    console.log(`   - ${5} aves creadas`);
-    console.log(`   - ${5} avistamientos creados`);
-    console.log(`   - ${6} comentarios creados`);
+    console.log(`   - ${4} usuarios creados`);
+    console.log(`   - ${12} rasgos visuales creados`);
+    console.log(`   - ${11} aves creadas`);
+    console.log(`   - ${sightings.length} avistamientos creados`);
+    console.log(`   - ${comments.length} comentarios creados`);
   } catch (err) {
     console.error("❌ Error al ejecutar seed:", err);
     throw err;

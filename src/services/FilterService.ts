@@ -22,12 +22,10 @@ export class FilterService {
             })
         )).filter((vT): vT is BirdVisualTrait => vT !== null);
         
-        console.log(filters)
         const fIds:Array<string> = [];
         filters.forEach(filter =>{
             fIds.push(filter.id);
         });
-        console.log("banana", fIds)
         birds.forEach( bird => {
 
             const ids: Array<string> = [];
