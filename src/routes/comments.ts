@@ -3,22 +3,27 @@ import { z } from "zod";
 
 const router = Router();
 
-// get IComment body
 router.post("/", async (req, res) => {
 	const commentData = req.body.data;
+	if (!req.auth) {
+		res.status(401).json({ message: "No autenticado" });
+		return;
+	} 
+	const user = await req.services.user.findById(req.auth.id)
+	
 	const commentSchema = z.object({
-		userId: z.uuid(),
-		birdId: z.uuid(),
-		text: z.string().min(2),
+		birdId: z.string(),
+		text: z.string().min(1),
 	});
-	if (commentSchema.parse(commentData) !== commentData) {
-		return res.status(400).json({ message: "Required fields missing" });
+	const parsed = commentSchema.safeParse(commentData);
+	if (!parsed.success) {
+		return res.status(400).json({ message: "Required fields missing", errors: parsed.error.message });
 	}
-
+	const payload = parsed.data;
 	const createdComment = await req.services.comment.create({
-		text: commentData.text,
-		birdId: commentData.birdId,
-		userId: commentData.userId,
+		text: payload.text,
+		birdId: payload.birdId,
+		userId: user?.id,
 		createdAt: new Date(),
 	});
 	if (!createdComment) {
