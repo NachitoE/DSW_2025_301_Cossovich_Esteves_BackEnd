@@ -81,7 +81,7 @@ async function main() {
   Object.entries(API_DICT).forEach(([path, router]) => {
     app.use(path, router);
   });
-
+  app.get("/api/health", async (req, res) => res.status(200).json("ok"))
   //----- Error Handler for JWT -----
   app.use((err: any, req: any, res: any, next: any) => {
     if (err.name === 'UnauthorizedError') {

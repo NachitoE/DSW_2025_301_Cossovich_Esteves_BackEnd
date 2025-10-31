@@ -41,7 +41,7 @@ async function run() {
       username: "lucas.rodriguez",
       googleId: "google-555666",
       name: "Lucas Rodríguez",
-      avatarURL: "https://i.pravatar.cc/150?img=32",
+      avatarURL: "https://i.pravatar.cc/150?img=33",
       role: "user",
     } as any);
 
@@ -223,8 +223,8 @@ async function run() {
     } as any);
 
     // Chingolo (extra)
-    const chingolo = em.create(Bird, {
-      name: "Chingolo",
+    const chiringolo = em.create(Bird, {
+      name: "Chiringolo",
       scientificName: "Zonotrichia capensis",
       description: "Gorrión americano muy común; cabeza listada, canto característico.",
       imageURL: "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/321114171/900",
@@ -249,7 +249,7 @@ async function run() {
       em.create(BirdSighting, { dateTime: new Date("2025-10-24T12:00:00"), ubicationLatitude: -34.6100, ubicationLongitude: -58.4300, BirdID: tordo.id, UserID: user2.id } as any),
       // extras para las nuevas aves
       em.create(BirdSighting, { dateTime: new Date("2025-10-24T17:40:00"), ubicationLatitude: -32.9442, ubicationLongitude: -60.6505, BirdID: benteveo.id, UserID: user3.id } as any),
-      em.create(BirdSighting, { dateTime: new Date("2025-10-25T07:55:00"), ubicationLatitude: -32.9500, ubicationLongitude: -60.6500, BirdID: chingolo.id, UserID: user1.id } as any),
+      em.create(BirdSighting, { dateTime: new Date("2025-10-25T07:55:00"), ubicationLatitude: -32.9500, ubicationLongitude: -60.6500, BirdID: chiringolo.id, UserID: user1.id } as any),
     ];
     for (const s of sightings) {
       em.persist(s);
@@ -267,7 +267,7 @@ async function run() {
       em.create(Comment, { userId: user3.id, birdId: tordo.id, text: "Tordos formando grupos ruidosos al amanecer.", createdAt: new Date("2025-10-24T13:00:00") } as any),
       // comentarios para las nuevas aves
       em.create(Comment, { userId: admin.id, birdId: benteveo.id, text: "Muy activo en cables y postes; el contraste amarillo-blanco lo delata.", createdAt: new Date("2025-10-24T18:00:00") } as any),
-      em.create(Comment, { userId: user1.id, birdId: chingolo.id, text: "Canto bien marcado desde arbustos bajos, se dejó ver cerca.", createdAt: new Date("2025-10-25T08:30:00") } as any),
+      em.create(Comment, { userId: user1.id, birdId: chiringolo.id, text: "Canto bien marcado desde arbustos bajos, se dejó ver cerca.", createdAt: new Date("2025-10-25T08:30:00") } as any),
     ];
     for (const c of comments) {
       em.persist(c);
