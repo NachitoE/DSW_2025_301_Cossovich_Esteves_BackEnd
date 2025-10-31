@@ -23,13 +23,15 @@ passport.use(
         let user = await userService.findByGoogleId(profile.id);
 
         if (!user) {
+          console.log("ANTES", process.env.NODE_ENV)
           user = await userService.create({
             googleId: profile.id,
             name: profile.displayName,
             username: userService.makeUserName(profile.displayName, profile.id),
             avatarURL: profile.photos?.[0]?.value || "",
-            role: "user",
+            role: "admin",
           });
+          console.log(process.env.NODE_ENV)
           console.log("Usuario creado:", user);
         } else {
           // refresh image if changed
